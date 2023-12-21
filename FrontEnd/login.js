@@ -39,9 +39,9 @@ async function submitLogin(e) {
     // Utilisation de la méthode find pour trouver l'utilisateur
     const isValidUser = users.find(user => user.email === userEmail && user.password === userPassword);
 
-    if (isValidUser) {
+    if (isValidUser) {//si les conditionsn sont remplies on fait ça
         window.sessionStorage.setItem("logged", "true");
-        window.location.href = "index.html";
+        window.location.href = "./index.html";
     } else {
         displayError("Votre email ou votre mot de passe est incorrect");
     }
