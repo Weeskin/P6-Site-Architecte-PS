@@ -4,29 +4,23 @@ const password = document.querySelector("form #password");
 const form = document.querySelector("form");
 const errorMessage = document.querySelector(".login p");
 
-// Fonction pour récupérer les utilisateur
+// Fonction pour récupérer les utilisateurs
 async function getUsers() {
-    console.log(email.value,password.value)
-    
-    try {
-        const response = await fetch("http://localhost:5678/api/users/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: email.value,
-                password: password.value,
-            }),
-            
+    try{
+        const response = await fetch('http://localhost:5678/api/users/login', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: email.value,
+            password: password.value,
+        }),
         });
 
-        if (!response.ok) {
-            throw new Error("Erreur lors de la récupération des utilisateurs");
-        }
-
-        const userData = await response.json();
-        return userData.users; 
+    const userData = await response.json();
+    console.log (userData);
+    return userData.users || [];
 
     } catch (error) {
         console.error("Erreur lors de la récupération des utilisateurs:", error);
@@ -36,23 +30,14 @@ async function getUsers() {
 
 // Fonction de gestion de la connexion
 async function submitLogin(e) {
-    e.preventDefault(); // Pour pas avoir la page blanche après soummission du formulaire
+    e.preventDefault();
 
     const users = await getUsers();
     const userEmail = email.value;
     const userPassword = password.value;
-    let isValidUser = false;
 
-    users.forEach((user) => {
-        if (user.email === userEmail && user.password === userPassword)
-        
-
-        {
-            isValidUser = true;
-            window.sessionStorage.setItem("logged", "true");
-            window.location.href = "index.html";
-        }
-    });
+    // Utilisation de la méthode find pour trouver l'utilisateur
+    const isValidUser = users.find(user => user.email === userEmail && user.password === userPassword);
 
     if (isValidUser) {
         window.sessionStorage.setItem("logged", "true");
@@ -61,6 +46,7 @@ async function submitLogin(e) {
         displayError("Votre email ou votre mot de passe est incorrect");
     }
 }
+
 
 // Fonction pour afficher le message d'erreur
 function displayError(message) {
