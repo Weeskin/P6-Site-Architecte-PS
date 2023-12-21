@@ -44,8 +44,6 @@ async function chargementPage() {
 // Appel de la fonction principale pour charger la page
 chargementPage();
 
-// Affichage des boutons filtres
-
 // Récupération du tableau des catégories
 async function getCategorys() {
     try {
