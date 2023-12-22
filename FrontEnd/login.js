@@ -5,26 +5,24 @@ const form = document.querySelector("form");
 const errorMessage = document.querySelector(".login p");
 
 // Fonction pour récupérer les utilisateurs
-async function getUsers() {
-    try{
+async function loginUser(email, password) {
+    try {
         const response = await fetch('http://localhost:5678/api/users/login', {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            email: email.value,
-            password: password.value,
-        }),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
         });
 
-    const userData = await response.json();
-    console.log (userData);
-    return userData.users || [];
-
+        const userData = await response.json();
+        return userData || {};
     } catch (error) {
-        console.error("Erreur lors de la récupération des utilisateurs:", error);
-        return [];
+        console.error("Erreur lors de la connexion:", error);
+        return {};
     }
 }
 
@@ -32,21 +30,23 @@ async function getUsers() {
 async function submitLogin(e) {
     e.preventDefault();
 
-    const users = await getUsers();
     const userEmail = email.value;
     const userPassword = password.value;
+    console.log(userEmail, userPassword);
 
-    // Utilisation de la méthode find pour trouver l'utilisateur
-    const isValidUser = users.find(user => user.email === userEmail && user.password === userPassword);
+    const userData = await loginUser(userEmail, userPassword);
 
-    if (isValidUser) {//si les conditionsn sont remplies on fait ça
+    if (userData.token) {
+        console.log("Utilisateur valide. Redirection vers index.html");
         window.sessionStorage.setItem("logged", "true");
+        window.sessionStorage.setItem("token", userData.token);
         window.location.href = "./index.html";
     } else {
+        email.style.border = "2px solid red";
+        password.style.border = "2px solid red";
         displayError("Votre email ou votre mot de passe est incorrect");
     }
 }
-
 
 // Fonction pour afficher le message d'erreur
 function displayError(message) {
