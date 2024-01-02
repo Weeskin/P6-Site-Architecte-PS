@@ -109,3 +109,71 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
     });
 });
+
+// Fonction pour afficher la barre du haut 
+function modeditionbar() {
+    const body = document.querySelector("body");
+    const newDiv = document.createElement("div");
+    const iconElement = document.createElement("i");
+    const titleEditionMod = document.createElement("p");
+
+    newDiv.className = "editionMod";
+    iconElement.className = "fa-regular fa-pen-to-square";
+    titleEditionMod.textContent = "Mode édition";
+
+    newDiv.appendChild(iconElement);
+    newDiv.appendChild(titleEditionMod);
+
+    // Ajout de la nouvelle div au début de body
+    body.insertBefore(newDiv, body.firstChild);
+}
+
+// Fonction pour changer mon titre Mes projets 
+function creationtitreMesProjets() {
+    const selecttitleportfolio = document.querySelector("#portfolio h2");
+
+    // Création d'une nouvelle div
+    const newDiv = document.createElement("div");
+    newDiv.className = "editionModPortfolio";
+
+    // Clonage du h2
+    const clonedTitle = selecttitleportfolio.cloneNode(true);
+
+    // Remplacement du h2 par la nouvelle div
+    selecttitleportfolio.parentNode.replaceChild(newDiv, selecttitleportfolio);
+
+    // Ajout du h2 cloné dans la nouvelle div
+    newDiv.appendChild(clonedTitle);
+
+    // Création du i avec la classe fa-regular fa-pen-to-square
+    const iconElement = document.createElement("i");
+    iconElement.className = "fa-regular fa-pen-to-square";
+
+    // Création du paragraphe avec le texte "Modifier"
+    const textElement = document.createElement("p");
+    textElement.textContent = "Modifier";
+
+    // Ajout du i et du texte dans la nouvelle div
+    newDiv.appendChild(iconElement);
+    newDiv.appendChild(textElement);
+}
+
+
+// Quand l'utilisateur est connecté
+document.addEventListener("DOMContentLoaded", function () {
+    const logged = window.sessionStorage.getItem("logged");
+
+    if (logged === "true") {
+        modeditionbar();
+        creationtitreMesProjets();
+        const header = document.querySelector("header");
+        header.style.margin = "75px 0px 50px 0px";
+        
+        const loginLink = document.querySelector("header nav ul li:nth-child(3) a");
+        loginLink.textContent = "Logout";
+
+        loginLink.addEventListener("click", () => {
+            window.sessionStorage.setItem("logged", "false");
+        });
+    }
+});

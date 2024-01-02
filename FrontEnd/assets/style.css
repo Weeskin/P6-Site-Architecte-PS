@@ -104,10 +104,12 @@ hgroup,
 menu,
 nav,
 section {
+	max-width: 1140px;
 	display: block;
 }
 
 body {
+	width: auto;
 	line-height: 1;
 }
 
@@ -136,13 +138,14 @@ table {
 
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1040px;
 	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
 }
 
 header {
+	max-width: 1140px;
 	display: flex;
 	justify-content: space-between;
 	margin: 50px 0
@@ -229,14 +232,13 @@ li:hover {
 
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
 }
 
 .filters {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 1em;
+	margin: 3em 0em 2em 0em;
 	gap: 10px;
 }
 
@@ -341,4 +343,39 @@ footer nav ul {
 	display: flex;
 	justify-content: flex-end;
 	margin: 2em
+}
+
+.editionMod {
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 59px;
+	background-color: black;
+	color: white;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	margin: 0;
+}
+
+.editionMod p {
+	padding-left: 1%;
+}
+
+.editionModPortfolio {
+	display: flex;
+	width: auto;
+	justify-content: center;
+	align-items: center;
+	gap: 10px
+}
+
+.editionModPortfolio i {
+	padding-left: 4%;
+	cursor: pointer;
+}
+
+.editionModPortfolio p {
+	cursor: pointer;
 }

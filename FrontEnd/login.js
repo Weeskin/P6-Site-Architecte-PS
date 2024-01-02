@@ -36,12 +36,12 @@ async function submitLogin(e) {
 
     const userData = await loginUser(userEmail, userPassword);
 
-    if (userData.token) {
+    if (userData.token) { //si ok on fait ça
         console.log("Utilisateur valide. Redirection vers index.html");
         window.sessionStorage.setItem("logged", "true");
         window.sessionStorage.setItem("token", userData.token);
         window.location.href = "./index.html";
-    } else {
+    } else {//message d'erreur
         email.style.border = "2px solid red";
         password.style.border = "2px solid red";
         displayError("Votre email ou votre mot de passe est incorrect");
