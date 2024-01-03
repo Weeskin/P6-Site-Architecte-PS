@@ -83,7 +83,8 @@ summary,
 time,
 mark,
 audio,
-video {
+video,
+.page {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -137,7 +138,8 @@ table {
 }
 
 /** end reset css**/
-body {
+
+.page {
 	max-width: 1040px;
 	margin: auto;
 	font-family: 'Work Sans';
@@ -268,7 +270,6 @@ li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 
 #contact,
@@ -296,6 +297,7 @@ li:hover {
 	flex-direction: column;
 }
 
+#modale input,
 #contact input,
 #login input {
 	height: 50px;
@@ -333,6 +335,12 @@ input[type="submit"] {
 	cursor: pointer;
 }
 
+#modale input[type="submit"] {
+	width: 237px;
+	border-top: #333;
+	font-size: 1em;
+}
+
 .error-message {
 	color: #FF0000;
 	font-size: 14px;
@@ -361,6 +369,8 @@ footer nav ul {
 
 .editionMod p {
 	padding-left: 1%;
+	font-family: 'Work Sans';
+	font-size: 14px;
 }
 
 .editionModPortfolio {
@@ -373,9 +383,69 @@ footer nav ul {
 
 .editionModPortfolio i {
 	padding-left: 4%;
-	cursor: pointer;
 }
 
 .editionModPortfolio p {
 	cursor: pointer;
+}
+
+.containerModals {
+	display: none;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: -100px;
+	width: 100%;
+	height: 110%;
+	background-color: rgba(128, 128, 128, 0.347);
+}
+
+.containerModals .ajoutphotoModal {
+	background-color: white;
+	width: 630px;
+	padding: 3%;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	gap: 30px
+}
+
+.containerModals .ajoutphotoModal .fa-solid {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
+
+.galerieModal {
+	width: 80%;
+	height: 100%;
+	border-bottom: 1px solid #B3B3B3;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-column-gap: 10px;
+	grid-row-gap: 1.8em;
+	padding-bottom: 10%;
+}
+
+.galerieModal figure {
+	position: relative;
+}
+
+.galerieModal img {
+	width: 100%;
+}
+
+.galerieModal #bin {
+	position: absolute;
+	top: 7px;
+	right: 7px;
+	cursor: pointer;
+	color: white;
+	background-color: black;
+	padding: 4px;
+	border-radius: 5px;
+	font-size: small;
 }

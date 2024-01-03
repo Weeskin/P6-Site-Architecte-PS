@@ -109,7 +109,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
     });
 });
-
 // Fonction pour afficher la barre du haut 
 function modeditionbar() {
     const body = document.querySelector("body");
@@ -152,11 +151,38 @@ function creationtitreMesProjets() {
     // Création du paragraphe avec le texte "Modifier"
     const textElement = document.createElement("p");
     textElement.textContent = "Modifier";
+    textElement.className = "modify";
 
     // Ajout du i et du texte dans la nouvelle div
     newDiv.appendChild(iconElement);
     newDiv.appendChild(textElement);
+
+    textElement.addEventListener("click", () => {
+        console.log("Bouton Modifier cliqué");
+        displaycontainerModals();
+    });
 }
+
+// Fonction affichage de la Modale
+function displaycontainerModals() {
+    const containerModals = document.querySelector(".containerModals");
+    containerModals.style.display = "flex";
+
+    // Fonction désaffichage de la Modale
+    const  crossend = document.querySelector("#crossend");
+    crossend.addEventListener("click", () => {
+        console.log("Bouton Cross cliqué");
+        containerModals.style.display = "none";
+    });
+
+    containerModals.addEventListener("click", (e) => {
+        console.log(e.target.className);
+        if (e.target.className === "containerModals") {
+            containerModals.style.display = "none";
+        }
+    });
+}
+
 
 
 // Quand l'utilisateur est connecté
@@ -167,8 +193,8 @@ document.addEventListener("DOMContentLoaded", function () {
         modeditionbar();
         creationtitreMesProjets();
         const header = document.querySelector("header");
-        header.style.margin = "75px 0px 50px 0px";
-        
+        header.style.margin = "100px 0px 50px 0px";
+
         const loginLink = document.querySelector("header nav ul li:nth-child(3) a");
         loginLink.textContent = "Logout";
 
@@ -177,3 +203,43 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+//Création de la Galerie Modale
+async function CreationGalerieModale() {
+    const galerieModal = document.querySelector(".galerieModal");
+
+    async function affichagegalerieModal(works) {
+        try {
+            // Nettoyage de la galerie avant ajout de nouveaux éléments
+            galerieModal.innerHTML = '';
+
+            // Créer les éléments de la galerie
+            works.forEach(work => {
+                const figure = document.createElement("figure");
+                const img = document.createElement("img");
+                const iconElementBin = document.createElement("i");
+                img.src = work.imageUrl;
+                img.alt = work.title;
+                iconElementBin.id = "bin";
+                iconElementBin.className = "fa fa-trash";
+                figure.appendChild(iconElementBin);
+                figure.appendChild(img);
+                galerieModal.appendChild(figure);
+
+            });
+        } catch (error) {
+            console.error('Erreur lors de l\'affichage de la galerieModal :', error);
+        }
+    }
+
+    // Appel de affichagegalerieModal avec les données récupérées depuis l'API
+    try {
+        const worksForModal = await getWorks();
+        affichagegalerieModal(worksForModal);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des œuvres pour la galerie modale :', error);
+    }
+}
+
+// Appel de la fonction pour créer la galerie modale au chargement de la page
+CreationGalerieModale();
