@@ -400,7 +400,7 @@ footer nav ul {
 	background-color: rgba(128, 128, 128, 0.347);
 }
 
-.containerModals .ajoutphotoModal {
+.containerModals .modalGaleriePhoto {
 	background-color: white;
 	width: 630px;
 	padding: 3%;
@@ -412,14 +412,14 @@ footer nav ul {
 	gap: 30px
 }
 
-.containerModals .ajoutphotoModal .fa-solid {
+.containerModals .modalGaleriePhoto .fa-xmark {
 	position: absolute;
 	top: 20px;
 	right: 20px;
 	cursor: pointer;
 }
 
-.galerieModal {
+.containerModals .modalGaleriePhoto .galerieModal {
 	width: 80%;
 	height: 100%;
 	border-bottom: 1px solid #B3B3B3;
@@ -430,15 +430,15 @@ footer nav ul {
 	padding-bottom: 10%;
 }
 
-.galerieModal figure {
+.containerModals .modalGaleriePhoto .galerieModal figure {
 	position: relative;
 }
 
-.galerieModal img {
+.containerModals .modalGaleriePhoto .galerieModal img {
 	width: 100%;
 }
 
-.galerieModal #bin {
+.containerModals .modalGaleriePhoto .galerieModal .fa-trash {
 	position: absolute;
 	top: 7px;
 	right: 7px;
@@ -448,4 +448,118 @@ footer nav ul {
 	padding: 4px;
 	border-radius: 5px;
 	font-size: small;
+}
+
+.containerModals .modalAjoutImage {
+	background-color: white;
+	width: 630px;
+	height: 670px;
+	padding: 3%;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+}
+
+.containerModals .modalAjoutImage .fa-arrow-left {
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	cursor: pointer;
+}
+
+.containerModals .modalAjoutImage .fa-xmark {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+}
+
+.containerModals .modalAjoutImage form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 80%;
+	width: 420px;
+	gap: 25px;
+}
+
+.containerModals .modalAjoutImage form .containerFile {
+	background-color: #E8F1F6;
+	height: 169px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 20px;
+	align-items: center;
+	border-radius: 3px;
+}
+
+.containerModals .modalAjoutImage form .containerFile i {
+	color: #B9C5CC;
+}
+
+.containerModals .modalAjoutImage form .containerFile label {
+	font-family: 'Work Sans';
+	font-size: 14px;
+	background-color: #B9C5CC;
+	color: #306685;
+	border-radius: 15px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.containerModals .modalAjoutImage form .containerFile input {
+	display: none;
+	font-family: 'Work Sans';
+	font-size: 14px;
+}
+
+.containerModals .modalAjoutImage form .containerFile img {
+	display: none;
+	max-width: 100%;
+	height: 100%;
+}
+
+.containerModals .modalAjoutImage form .containerFile .fa-image {
+	font-size: 3rem;
+}
+
+.containerModals .modalAjoutImage form .containerFile p {
+	font-weight: 300;
+	font-size: 0.5rem;
+	font-family: 'Work Sans';
+}
+
+.containerModals .modalAjoutImage form label {
+	font-family: 'Work Sans';
+	font-size: 14px;
+	margin-bottom: -20px;
+}
+
+.containerModals .modalAjoutImage form select {
+	height: 50px;
+	font-size: 1.2em;
+	border: transparent;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+
+.containerModals .modalAjoutImage form .button {
+	background-color: #A7A7A7;
+	color: white;
+	width: 237px;
+	height: 36px;
+	padding: 5px 10px;
+	border-radius: 60px;
+	border: none;
+	cursor: pointer;
+	align-self: center;
+}
+
+.containerModals .modalAjoutImage form .button:focus {
+	background-color: black;
+	color: white;
 }
