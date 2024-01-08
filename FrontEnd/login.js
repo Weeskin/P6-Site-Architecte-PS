@@ -26,6 +26,25 @@ async function loginUser(email, password) {
     }
 }
 
+//Fonction de vérification du token
+async function validateToken(token) {
+    try {
+        const response = await fetch('http://localhost:5678/api/users/validate-token', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        const validationData = await response.json();
+        return validationData.valid || false;
+    } catch (error) {
+        console.error("Erreur lors de la validation du token:", error);
+        return false;
+    }
+}
+
 // Fonction de gestion de la connexion
 async function submitLogin(e) {
     e.preventDefault();
@@ -35,8 +54,8 @@ async function submitLogin(e) {
     console.log(userEmail, userPassword);
 
     const userData = await loginUser(userEmail, userPassword);
-
-    if (userData.token) { //si ok on fait ça
+    
+    if (await validateToken(userData.token)) { //si ok on fait ça
         console.log("Utilisateur valide. Redirection vers index.html");
         window.sessionStorage.setItem("logged", "true");
         window.sessionStorage.setItem("token", userData.token);

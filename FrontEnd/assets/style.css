@@ -487,7 +487,7 @@ footer nav ul {
 
 .containerModals .modalAjoutImage form .containerFile {
 	background-color: #E8F1F6;
-	height: 169px;
+	height: 45%;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
