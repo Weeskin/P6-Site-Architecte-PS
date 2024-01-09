@@ -1,47 +1,38 @@
 // Variables
-const email = document.querySelector("form #email");
-const password = document.querySelector("form #password");
+const emailInput = document.querySelector("form #email");
+const passwordInput = document.querySelector("form #password");
 const form = document.querySelector("form");
 const errorMessage = document.querySelector(".login p");
 
-// Fonction pour récupérer les utilisateurs
-async function loginUser(email, password) {
+// URL de l'API
+const apiUrl = 'http://localhost:5678/api/users/login';
+
+// Fonction pour effectuer une requête d'authentification
+async function authenticateUser(email, password, token) {
     try {
-        const response = await fetch('http://localhost:5678/api/users/login', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email,
-                password,
-            }),
-        });
+        if (email && password && token) {
+            // Connexion de l'utilisateur
+            const loginResponse = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    email,
+                    password,
+                }),
+            });
 
-        const userData = await response.json();
-        return userData || {};
+            const userData = await loginResponse.json();
+            return { userData, isAuthenticated: true } || { isAuthenticated: false };
+        } else {
+            console.error("Paramètres manquants pour l'authentification.");
+            return { isAuthenticated: false };
+        }
     } catch (error) {
-        console.error("Erreur lors de la connexion:", error);
-        return {};
-    }
-}
-
-//Fonction de vérification du token
-async function validateToken(token) {
-    try {
-        const response = await fetch('http://localhost:5678/api/users/validate-token', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            }
-        });
-
-        const validationData = await response.json();
-        return validationData.valid || false;
-    } catch (error) {
-        console.error("Erreur lors de la validation du token:", error);
-        return false;
+        console.error("Erreur lors de l'authentification:", error);
+        return { isAuthenticated: false };
     }
 }
 
@@ -49,28 +40,23 @@ async function validateToken(token) {
 async function submitLogin(e) {
     e.preventDefault();
 
-    const userEmail = email.value;
-    const userPassword = password.value;
+    const userEmail = emailInput.value;
+    const userPassword = passwordInput.value;
+    const userToken = window.sessionStorage.getItem("token");
     console.log(userEmail, userPassword);
-
-    const userData = await loginUser(userEmail, userPassword);
     
-    if (await validateToken(userData.token)) { //si ok on fait ça
+    const { userData, isAuthenticated } = await authenticateUser(userEmail, userPassword, userToken);
+
+    if (isAuthenticated) {
         console.log("Utilisateur valide. Redirection vers index.html");
         window.sessionStorage.setItem("logged", "true");
         window.sessionStorage.setItem("token", userData.token);
         window.location.href = "./index.html";
-    } else {//message d'erreur
-        email.style.border = "2px solid red";
-        password.style.border = "2px solid red";
+    } else {
+        emailInput.style.border = "2px solid red";
+        passwordInput.style.border = "2px solid red";
         displayError("Votre email ou votre mot de passe est incorrect");
     }
-}
-
-// Fonction pour afficher le message d'erreur
-function displayError(message) {
-    errorMessage.textContent = message;
-    errorMessage.classList.toggle("error-message", Boolean(message));
 }
 
 // Ajout d'un écouteur d'événement pour la soumission du formulaire
