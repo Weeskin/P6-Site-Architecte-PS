@@ -150,27 +150,33 @@ const CreationGalerieModale = async () => {
 
 // Fonction pour supprimer l'image en utilisant l'ID
 const deleteImage = async (id) => {
-    const deleteurl = `http://localhost:5678/api/works/${id}`;
-    const deleteMethod = {
-        method: "DELETE",
-    };
+    const deleteUrl = `http://localhost:5678/api/works/${id}`;
 
     try {
-        const response = await customFetch(deleteurl, deleteMethod.method, null);
-        if (!response.ok) {
+        const response = await deleteFetch(deleteUrl);
+
+        if (response.ok) {
+            const responseData = await response.text();
+
+            // Vérifie si la réponse est vide
+            if (responseData.trim() !== "") {
+                const data = JSON.parse(responseData);
+                console.log("La suppression a réussi, voici la data :", data);
+
+                // Recharge la galerie après la suppression
+                affichageGalerieModal(await getWorks());
+            } else {
+                console.log("La réponse JSON est vide.");
+            }
+        } else {
             console.log("Le delete n'a pas marché !");
             throw new Error("Le delete n'a pas marché !");
         }
-
-        const data = await response.json();
-        console.log("La suppression a réussi, voici la data :", data);
-
-        // Recharge la galerie après la suppression
-        affichagegalerieModal(await getWorks());
     } catch (error) {
-        console.error("Erreur lors de la suppression de l'image :", error);
+        console.error("Erreur lors de la suppression de l'image :", error.message);
     }
 };
+
 
 // Appel de la fonction pour créer la galerie modale au chargement de la page
 CreationGalerieModale();
@@ -233,9 +239,10 @@ function ajoutImage() {
 
         // Récupération des valeurs du formulaire
         const formData = new FormData(formAjoutImage);
+       
 
         try {
-            const response = await customFetch(apiUrlWorks, "POST", formData);
+            const response = await postFetch(apiUrlWorks,formData);
 
             if (!response.ok) {
                 throw new Error("Erreur lors de l'envoi du fichier");
