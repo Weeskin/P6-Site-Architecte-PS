@@ -1,58 +1,65 @@
-// Variables
+// URL de l'API
+const apiUrl = 'http://localhost:5678/api/users/login';
+
+// Sélection des éléments du DOM
 const emailInput = document.querySelector("form #email");
 const passwordInput = document.querySelector("form #password");
 const form = document.querySelector("form");
 const errorMessage = document.querySelector(".login p");
 
-// URL de l'API
-const apiUrl = 'http://localhost:5678/api/users/login';
-
 // Fonction pour effectuer une requête d'authentification
-async function authenticateUser(email, password, token) {
+async function loginUser(email, password) {
     try {
-        if (email && password && token) {
-            // Connexion de l'utilisateur
-            const loginResponse = await fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    email,
-                    password,
-                }),
-            });
+        const response = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
 
-            const userData = await loginResponse.json();
-            return { userData, isAuthenticated: true } || { isAuthenticated: false };
-        } else {
-            console.error("Paramètres manquants pour l'authentification.");
-            return { isAuthenticated: false };
-        }
+        // Retourne les données utilisateur ou un objet vide
+        return await response.json() || {};
     } catch (error) {
-        console.error("Erreur lors de l'authentification:", error);
-        return { isAuthenticated: false };
+        console.error("Erreur lors de la connexion:", error);
+        return {};
     }
+}
+
+// Fonction pour afficher le message d'erreur
+function displayError(message) {
+    errorMessage.textContent = message;
+    errorMessage.classList.toggle("error-message", Boolean(message));
+}
+
+// Fonction pour rediriger vers la page d'accueil
+function redirectToIndex() {
+    console.log("Utilisateur valide. Redirection vers index.html");
+    window.sessionStorage.setItem("logged", "true");
+    window.location.href = "./index.html";
 }
 
 // Fonction de gestion de la connexion
 async function submitLogin(e) {
     e.preventDefault();
 
+    // Récupération des valeurs des champs email et password
     const userEmail = emailInput.value;
     const userPassword = passwordInput.value;
-    const userToken = window.sessionStorage.getItem("token");
-    console.log(userEmail, userPassword);
-    
-    const { userData, isAuthenticated } = await authenticateUser(userEmail, userPassword, userToken);
 
-    if (isAuthenticated) {
-        console.log("Utilisateur valide. Redirection vers index.html");
-        window.sessionStorage.setItem("logged", "true");
+    // Appel de la fonction loginUser avec les identifiants
+    const userData = await loginUser(userEmail, userPassword);
+
+    // Vérification de l'existence du token dans les données utilisateur
+    if (userData.token) {
+        // Stockage du token et redirection vers la page d'accueil
         window.sessionStorage.setItem("token", userData.token);
-        window.location.href = "./index.html";
+        redirectToIndex();
     } else {
+        // Affichage d'un message d'erreur si l'authentification échoue
         emailInput.style.border = "2px solid red";
         passwordInput.style.border = "2px solid red";
         displayError("Votre email ou votre mot de passe est incorrect");
