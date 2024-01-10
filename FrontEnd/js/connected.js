@@ -239,28 +239,34 @@ function ajoutImage() {
 
         // Récupération des valeurs du formulaire
         const formData = new FormData(formAjoutImage);
-       
 
         try {
-            const response = await postFetch(apiUrlWorks,formData);
+            const response = await postFetch(apiUrlWorks, formData);
 
-            if (!response.ok) {
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Fichier envoyé avec succès :", data);
+
+                // Actualiser la galerie et les works
+                affichagegalerieModal();
+                affichageWorks();
+
+                // Réinitialiser le formulaire et les modals
+                formAjoutImage.reset();
+                modalGaleriePhoto.style.display = "flex";
+                modalAjoutImage.style.display = "none";
+                previewImg.style.display = "none";
+            } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }
-
-            const data = await response.json();
-            console.log("Fichier envoyé avec succès :", data);
-            affichagegalerieModal();
-            affichageWorks();
-            formAjoutImage.reset();
-            modalGaleriePhoto.style.display = "flex";
-            modalAjoutImage.style.display = "none";
-            previewImg.style.display = "none";
         } catch (error) {
-            console.error("Erreur :", error);
+            console.error("Erreur :", error.message);
         }
+
+        reinitialiserFormulaire();
     });
 }
+
 
 
 //Fonction qui génère les catégories dynamiquement pour le select
@@ -310,10 +316,3 @@ function reinitialiserFormulaire() {
     pFile.style.display = "flex";
     formAjoutImage.reset();
 }
-
-// Ajout de l'événement de soumission du formulaire
-formAjoutImage.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await ajoutImage();
-    reinitialiserFormulaire();
-});
