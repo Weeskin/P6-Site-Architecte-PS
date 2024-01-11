@@ -238,7 +238,20 @@ function ajoutImage() {
         e.preventDefault();
 
         // Récupération des valeurs du formulaire
-        const formData = new FormData(formAjoutImage);
+        const formData = new FormData();
+        const categoryInput = document.getElementById('categoryInput')
+        const projectTitle = title.value;
+        const projectImage = inputFile.files[0];
+        const categoryValue = categoryInput.value; //Chaque option dans le select doit avoir comme valeur le category ID
+
+        console.log(projectTitle);
+        console.log(projectImage);
+        console.log(categoryValue);
+    
+        formData.append("title", projectTitle);
+        formData.append("category", categoryValue);
+        formData.append("image", projectImage);
+    
 
         try {
             const response = await postFetch(apiUrlWorks, formData);
@@ -251,23 +264,26 @@ function ajoutImage() {
                 affichagegalerieModal();
                 affichageWorks();
 
-                // Réinitialiser le formulaire et les modals
-                formAjoutImage.reset();
-                modalGaleriePhoto.style.display = "flex";
-                modalAjoutImage.style.display = "none";
-                previewImg.style.display = "none";
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }
         } catch (error) {
             console.error("Erreur :", error.message);
+        } finally {
+            //Réinitialiser tout
+            previewImg.src = "#";
+            previewImg.style.display = "none";
+            labelFile.style.display = "flex";
+            iconFile.style.display = "flex";
+            pFile.style.display = "flex";
+            formAjoutImage.reset();
+            modalGaleriePhoto.style.display = "flex";
+            modalAjoutImage.style.display = "none";
+            previewImg.style.display = "none";
+            setTimeout(() => {location.reload()}, 1000);
         }
-
-        reinitialiserFormulaire();
     });
 }
-
-
 
 //Fonction qui génère les catégories dynamiquement pour le select
 async function displayCategoryModal() {
@@ -307,12 +323,3 @@ champsAValider.forEach(champ => {
 
 verifierChamps();
 
-// Fonction pour réinitialiser le formulaire
-function reinitialiserFormulaire() {
-    previewImg.src = "#";
-    previewImg.style.display = "none";
-    labelFile.style.display = "flex";
-    iconFile.style.display = "flex";
-    pFile.style.display = "flex";
-    formAjoutImage.reset();
-}

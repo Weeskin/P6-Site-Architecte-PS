@@ -16,18 +16,11 @@ async function fetchData(url, method, data) {
             'Authorization': `Bearer ${token}`
         };
 
-        console.log("Envoi de la requête vers :", url);
-        console.log("Méthode de la requête :", method);
-        console.log("Données de la requête :", data);
-
-        if ((method === 'POST' || method === 'DELETE') && data) {
-            headers['Content-Type'] = data instanceof FormData ? 'multipart/form-data' : 'application/json';
-        }
-
         const response = await fetch(url, {
             method,
             headers,
-            body: data ? (data instanceof FormData ? data : JSON.stringify(data)) : null
+            body: data ? (data instanceof FormData ? data : data) : null
+
         });
 
         if (!response.ok) {
