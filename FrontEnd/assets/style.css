@@ -180,6 +180,13 @@ h2 {
 	color: #1D6154
 }
 
+h3 {
+	font-family: 'Work Sans';
+	font-weight: 400;
+	font-size: 26px;
+	color: black
+}
+
 nav ul {
 	display: flex;
 	align-items: center;

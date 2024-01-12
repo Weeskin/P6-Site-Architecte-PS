@@ -41,7 +41,6 @@ async function chargementPage() {
     await affichageWorks(await getWorks());
 }
 
-// Appel de la fonction principale pour charger la page
 chargementPage();
 
 // Récupération du tableau des catégories
@@ -95,7 +94,6 @@ async function filterCategory() {
     });
 }
 
-// Appel de la fonction pour initialiser le filtrage au chargement
 filterCategory();
 
 //Smooth scrool
