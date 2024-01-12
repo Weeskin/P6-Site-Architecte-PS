@@ -1,0 +1,5 @@
+email: sophie.bluel@test.tld
+
+password: S0phie
+
+http://localhost:5678/api-docs/
