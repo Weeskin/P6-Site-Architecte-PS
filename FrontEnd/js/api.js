@@ -20,11 +20,11 @@ async function fetchData(url, method, data) {
             method,
             headers,
             body: data ? (data instanceof FormData ? data : data) : null
-
         });
 
         if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
+            const errorText = await response.text();
+            throw new Error(`Erreur HTTP: ${response.status} - ${errorText}`);
         }
 
         return response;

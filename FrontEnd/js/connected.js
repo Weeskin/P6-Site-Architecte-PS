@@ -177,7 +177,6 @@ const deleteImage = async (id) => {
     }
 };
 
-
 // Appel de la fonction pour créer la galerie modale au chargement de la page
 CreationGalerieModale();
 
@@ -243,15 +242,10 @@ function ajoutImage() {
         const projectTitle = title.value;
         const projectImage = inputFile.files[0];
         const categoryValue = categoryInput.value; //Chaque option dans le select doit avoir comme valeur le category ID
-
-        console.log(projectTitle);
-        console.log(projectImage);
-        console.log(categoryValue);
     
         formData.append("title", projectTitle);
         formData.append("category", categoryValue);
         formData.append("image", projectImage);
-    
 
         try {
             const response = await postFetch(apiUrlWorks, formData);
@@ -280,10 +274,10 @@ function ajoutImage() {
             modalGaleriePhoto.style.display = "flex";
             modalAjoutImage.style.display = "none";
             previewImg.style.display = "none";
-            setTimeout(() => {location.reload()}, 1000);
         }
     });
 }
+ajoutImage()
 
 //Fonction qui génère les catégories dynamiquement pour le select
 async function displayCategoryModal() {
