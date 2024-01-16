@@ -129,7 +129,6 @@ const deleteImage = async (id) => {
         console.error("Erreur lors de la suppression de l'image :", error.message);
     }
 };
-
 CreationGalerieModale();
 
 // -------------  Affichage de la modale "Ajout d'Image"------------- //
@@ -158,8 +157,8 @@ const displayAjoutImage = () => {
         });
     });
 };
-
 displayAjoutImage();
+
 // Ecouter les changements sur l'input file pour prévisualisation dans la modale "Ajout d'Image"
 function prevImg() {
     inputFile.addEventListener("change", () => {
@@ -191,8 +190,8 @@ async function displayCategoryModal() {
         select.appendChild(option);
     });
 }
-
 displayCategoryModal();
+
 // Ajout des écouteurs d'événements pour vérifier un à un chaque champ
 const champsAValider = [
     document.getElementById('file'),
