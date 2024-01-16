@@ -49,7 +49,6 @@ async function affichageGalleryProjets() {
     }
 }
 
-
 function creationProjet (work) {
     const figure = document.createElement("figure");
             const img = document.createElement("img");

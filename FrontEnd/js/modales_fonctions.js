@@ -22,9 +22,8 @@ function ajoutImage() {
                 console.log("Fichier envoyé avec succès :", data);
 
                 // Actualiser la galerie et les works
-                affichagegalerieModal();
-                affichageWorks();
-
+                CreationGalerieModale();
+                affichageGalleryProjets()
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }

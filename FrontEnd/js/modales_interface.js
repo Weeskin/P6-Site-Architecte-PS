@@ -79,12 +79,8 @@ async function affichageGalerieModal(works) {
     try {
         // Nettoyage de la galerie avant ajout de nouveaux éléments
         galerieModal.innerHTML = "";
-        getWorks().then((works) => {
-        // Créer les éléments de la galerie modale
-            works.forEach(work => {
-                createAndAppendFigureModal(work);
-            });
-        deleteImage();
+        works.forEach(work => {
+            createAndAppendFigureModal(work);
         });
     } catch (error) {
         console.error('Erreur lors de l\'affichage de la galerieModal :', error);
@@ -107,20 +103,8 @@ const deleteImage = async (id) => {
     
     try {
         const response = await deleteFetch(deleteUrl);
-        
         if (response.ok) {
-            const responseData = await response.text();
-            
-            // Vérifie si la réponse est vide
-            if (responseData.trim() !== "") {
-                const data = JSON.parse(responseData);
-                console.log("La suppression a réussi, voici la data :", data);
-                
-                // Recharge la galerie après la suppression
-                displayGalerieModal();
-            } else {
-                console.log("La réponse JSON est vide.");
-            }
+                CreationGalerieModale()
         } else {
             console.log("Le delete n'a pas marché !");
             throw new Error("Le delete n'a pas marché !");
@@ -129,6 +113,7 @@ const deleteImage = async (id) => {
         console.error("Erreur lors de la suppression de l'image :", error.message);
     }
 };
+
 CreationGalerieModale();
 
 // -------------  Affichage de la modale "Ajout d'Image"------------- //
