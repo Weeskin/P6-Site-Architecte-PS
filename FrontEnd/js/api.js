@@ -1,6 +1,6 @@
 //Les différents URL
 const apiUrlLogin = 'http://localhost:5678/api/users/login';
-const apiUrlWorks = 'http://localhost:5678/api/works'; // Correction ici
+const apiUrlWorks = 'http://localhost:5678/api/works';
 
 async function postFetch(url, data) {
     return fetchData(url, 'POST', data);
