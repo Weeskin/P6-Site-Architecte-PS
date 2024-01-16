@@ -80,23 +80,25 @@ async function filterCategory() {
     const allWorks = await getWorks();
     const allButtons = document.querySelectorAll(".filters button");
 
-    allButtons.forEach((button) => {
-        button.addEventListener("click", (e) => {
-            const btnId = e.target.id;
-            gallery.innerHTML = '';
-
-            if (btnId !== '0') {
-                const filteredWorks = allWorks.filter((work) => {
-                    return work.categoryId == btnId;
+        allButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+                allButtons.forEach((btn) => {
+                btn.classList.remove("active");
                 });
+                button.classList.add("active");
+                const btnId = e.target.id;
+                gallery.innerHTML = "";
 
-                affichageGalleryProjets(filteredWorks);
-            } else {
-                // Si btnId est '0', affiche tous les travaux
-                affichageGalleryProjets(allWorks);
-            }
-
-            console.log(btnId);
+                allWorks.forEach((work) => {
+                    if (btnId == work.categoryId) {
+                    creationProjet(work);
+                    // console.log(work);
+                    }
+                    if (btnId == "0") {
+                        creationProjet(work);
+                        // console.log(work);
+                    }
+            });
         });
     });
 }
