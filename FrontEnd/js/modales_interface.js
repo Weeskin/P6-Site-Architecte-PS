@@ -3,10 +3,12 @@
 // Sélecteurs DOM
 const body = document.querySelector("body");
 const header = document.querySelector("header");
+//const user = window.sessionStorage.getItem("userId");
 const loginLink = document.querySelector("header nav ul li:nth-child(3) a");
 const containerModals = document.querySelector(".containerModals");
 const crossend = document.querySelector(".fa-xmark");
 const modalGaleriePhoto = document.querySelector(".modalGaleriePhoto");
+const galerieModal = document.querySelector(".galerieModal");
 const btnAddPhoto = document.querySelector(".modalGaleriePhoto input");
 const modalAjoutImage = document.querySelector(".modalAjoutImage");
 const formAjoutImage = document.querySelector("#formAjoutImage");
@@ -18,80 +20,11 @@ const pFile = document.querySelector(".containerFile p");
 const title = document.querySelector("#title");
 const btnAdd = document.querySelector(".containerModals .modalAjoutImage form .button");
 
-
-// Fonction pour créer un élément i avec une classe donnée
-const createIconElement = (className) => {
-    const iconElement = document.createElement("i");
-    iconElement.className = className;
-    return iconElement;
-};
-
-// Fonction pour afficher la barre du haut 
-const modeditionbar = () => {
-    const newDiv = document.createElement("div");
-    const iconElement = document.createElement("i");
-    const titleEditionMod = document.createElement("p");
-
-    newDiv.className = "editionMod";
-    iconElement.className = "fa-regular fa-pen-to-square";
-    titleEditionMod.textContent = "Mode édition";
-
-    newDiv.appendChild(iconElement);
-    newDiv.appendChild(titleEditionMod);
-
- // Ajout de la nouvelle div au début de body
-    body.insertBefore(newDiv, body.firstChild);
-};
-
-// Déconnexion via Logout
-document.addEventListener("DOMContentLoaded", function () {
-    const logged = window.sessionStorage.getItem("logged");
-
-    if (logged === "true") {
-        modeditionbar();
-        creationtitreMesProjets();
-        header.style.margin = "100px 0px 50px 0px";
-
-        loginLink.textContent = "Logout";
-
-        loginLink.addEventListener("click", () => {
-            window.sessionStorage.setItem("logged", "false");
-        });
-    }
-});
-
-// Fonction pour changer mon titre Mes projets et ajouter le "Modifier"
-const creationtitreMesProjets = () => {
-    const selectTitlePortfolio = document.querySelector("#portfolio h2");
-    const newDiv = document.createElement("div");
-    newDiv.className = "editionModPortfolio";
-    const clonedTitle = selectTitlePortfolio.cloneNode(true);
-    selectTitlePortfolio.parentNode.replaceChild(newDiv, selectTitlePortfolio);
-    newDiv.appendChild(clonedTitle);
-
-    const iconElement = createIconElement("fa-regular fa-pen-to-square");
-    const textElement = document.createElement("p");
-    textElement.textContent = "Modifier";
-    textElement.className = "modify";
-
-    newDiv.appendChild(iconElement);
-    newDiv.appendChild(textElement);
-
-    textElement.addEventListener("click", () => {
-        displayContainerModals();
-    });
-};
-
-// Fonction pour gérer la fermeture des modales
-function closeModals() {
-    containerModals.style.display = "none";
-}
-
-// -------------  Affichage de la modale "Galerie"------------- //
-const displayContainerModals = () => {
+// -------------  Affichage de la modale générale------------- //
+function displayContainerModals() {
     containerModals.style.display = "flex";
-    modalAjoutImage.style.display = "none";
     modalGaleriePhoto.style.display = "flex";
+    modalAjoutImage.style.display = "none";
 
     // Gérer la fermeture de la modale via la croix
     crossend.addEventListener("click", closeModals)
@@ -104,49 +37,99 @@ const displayContainerModals = () => {
     });
 };
 
-//Création de la modale "Galerie"
-const CreationGalerieModale = async () => {
-    const galerieModal = document.querySelector(".galerieModal");
+// Fonction pour gérer la fermeture des modales
+function closeModals() {
+    containerModals.style.display = "none";
+}
 
-    async function affichagegalerieModal(works) {
-        try {
-            // Nettoyage de la galerie avant ajout de nouveaux éléments
-            galerieModal.innerHTML = "";
+// Fonction pour créer et ajouter un élément figure à la galerie modale
+async function createAndAppendFigureModal(work) {
+    const figure = createFigureElementModal(work);
+    galerieModal.appendChild(figure);
+    addDeleteEventListenerModal(work.id);
 
-            // Créer les éléments de la galerie
+}
+
+// Fonction pour créer un élément figure dans la galerie modale
+function createFigureElementModal(work) {
+    const figure = document.createElement("figure");
+    const img = document.createElement("img");
+    const iconElementBin = document.createElement("i");
+    img.src = work.imageUrl;
+    img.alt = work.title;
+    iconElementBin.id = work.id;
+    iconElementBin.className = "fa fa-trash";
+    figure.appendChild(iconElementBin);
+    figure.appendChild(img);
+    return figure;
+}
+
+// Fonction pour ajouter un gestionnaire d'événements de suppression dans la galerie modale
+async function addDeleteEventListenerModal(id) {
+    const iconElementBin = document.getElementById(id);
+    iconElementBin.addEventListener("click", () => {
+        console.log("Bouton Corbeille cliqué");
+        // Appel de la fonction pour supprimer l'image avec l'ID associé à l'image
+        deleteImage(id);
+    });
+}
+
+// Fonction pour afficher la galerie modale
+async function affichageGalerieModal(works) {
+    try {
+        // Nettoyage de la galerie avant ajout de nouveaux éléments
+        galerieModal.innerHTML = "";
+        getWorks().then((works) => {
+        // Créer les éléments de la galerie modale
             works.forEach(work => {
-                const figure = document.createElement("figure");
-                const img = document.createElement("img");
-                const iconElementBin = document.createElement("i");
-                img.src = work.imageUrl;
-                img.alt = work.title;
-                iconElementBin.id = work.id;
-                iconElementBin.className = "fa fa-trash";
-                figure.appendChild(iconElementBin);
-                figure.appendChild(img);
-                galerieModal.appendChild(figure);
-
-                iconElementBin.addEventListener("click", () => {
-                    console.log("Bouton Corbeille cliqué");
-                    // Appel de la fonction pour supprimer l'image avec l'ID associé à l'image
-                    deleteImage(work.id);
-                    });
-                });
-        } catch (error) {
-            console.error('Erreur lors de l\'affichage de la galerieModal :', error);
-        }
+                createAndAppendFigureModal(work);
+            });
+        deleteImage();
+        });
+    } catch (error) {
+        console.error('Erreur lors de l\'affichage de la galerieModal :', error);
     }
+}
 
-    // Appel de affichageGalerieModal avec les données récupérées depuis l'API
+// Appel de affichageGalerieModal avec les données récupérées depuis l'API
+async function CreationGalerieModale() {
     try {
         const worksForModal = await getWorks();
-        affichagegalerieModal(worksForModal);
+        affichageGalerieModal(worksForModal);
     } catch (error) {
         console.error('Erreur lors de la récupération des œuvres pour la galerie modale :', error);
     }
+}
+// Fonction de suppression de l'image en utilisant l'ID
+
+const deleteImage = async (id) => {
+    const deleteUrl = `http://localhost:5678/api/works/${id}`;
+    
+    try {
+        const response = await deleteFetch(deleteUrl);
+        
+        if (response.ok) {
+            const responseData = await response.text();
+            
+            // Vérifie si la réponse est vide
+            if (responseData.trim() !== "") {
+                const data = JSON.parse(responseData);
+                console.log("La suppression a réussi, voici la data :", data);
+                
+                // Recharge la galerie après la suppression
+                displayGalerieModal();
+            } else {
+                console.log("La réponse JSON est vide.");
+            }
+        } else {
+            console.log("Le delete n'a pas marché !");
+            throw new Error("Le delete n'a pas marché !");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'image :", error.message);
+    }
 };
 
-// Appel de la fonction pour créer la galerie modale au chargement de la page
 CreationGalerieModale();
 
 // -------------  Affichage de la modale "Ajout d'Image"------------- //
@@ -176,8 +159,26 @@ const displayAjoutImage = () => {
     });
 };
 
-//Appel de la modale "Ajout d'Image"
 displayAjoutImage();
+// Ecouter les changements sur l'input file pour prévisualisation dans la modale "Ajout d'Image"
+function prevImg() {
+    inputFile.addEventListener("change", () => {
+        const file = inputFile.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImg.src = e.target.result;
+                previewImg.style.display = "flex";
+                labelFile.style.display = "none";
+                iconFile.style.display = "none";
+                pFile.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+        } 
+    });
+}
+prevImg();
 
 //Fonction qui génère les catégories dynamiquement pour le select (visuel)
 async function displayCategoryModal() {
@@ -190,14 +191,19 @@ async function displayCategoryModal() {
         select.appendChild(option);
     });
 }
-displayCategoryModal();
 
+displayCategoryModal();
 // Ajout des écouteurs d'événements pour vérifier un à un chaque champ
 const champsAValider = [
     document.getElementById('file'),
     document.getElementById('title'),
     document.getElementById('categoryInput')
 ];
+
+champsAValider.forEach(champ => {
+    champ.addEventListener('input', verifierChamps);
+});
+
 // Fonction pour vérifier si tous les champs sont remplis et changer la couleur du bouton
 function verifierChamps() {
     // Vérification si tous les champs sont remplis
@@ -210,9 +216,4 @@ function verifierChamps() {
         btnAdd.style.backgroundColor = "#ccc";
     }
 };
-
-champsAValider.forEach(champ => {
-    champ.addEventListener('input', verifierChamps);
-});
-
 verifierChamps();
