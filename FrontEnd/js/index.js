@@ -224,3 +224,5 @@ async function getStoredWorks() {
     return storedWorks ? JSON.parse(storedWorks) : [];
     //console.log(storedWorks)
 }
+
+filterCategorys();
