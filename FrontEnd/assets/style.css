@@ -407,7 +407,7 @@ footer nav ul {
 	background-color: rgba(128, 128, 128, 0.347);
 }
 
-.containerModals .modalGaleriePhoto {
+.containerModals .containerModalGallery {
 	background-color: white;
 	width: 630px;
 	padding: 3%;
@@ -419,14 +419,14 @@ footer nav ul {
 	gap: 30px
 }
 
-.containerModals .modalGaleriePhoto .fa-xmark {
+.containerModals .containerModalGallery .fa-xmark {
 	position: absolute;
 	top: 20px;
 	right: 20px;
 	cursor: pointer;
 }
 
-.containerModals .modalGaleriePhoto .galerieModal {
+.containerModals .containerModalGallery .galerieModal {
 	width: 80%;
 	height: 100%;
 	border-bottom: 1px solid #B3B3B3;
@@ -437,15 +437,15 @@ footer nav ul {
 	padding-bottom: 10%;
 }
 
-.containerModals .modalGaleriePhoto .galerieModal figure {
+.containerModals .containerModalGallery .galerieModal figure {
 	position: relative;
 }
 
-.containerModals .modalGaleriePhoto .galerieModal img {
+.containerModals .containerModalGallery .galerieModal img {
 	width: 100%;
 }
 
-.containerModals .modalGaleriePhoto .galerieModal .fa-trash {
+.containerModals .containerModalGallery .galerieModal .fa-trash {
 	position: absolute;
 	top: 7px;
 	right: 7px;
@@ -457,7 +457,7 @@ footer nav ul {
 	font-size: small;
 }
 
-.containerModals .modalAjoutImage {
+.containerModals .containerModalAddWorks {
 	background-color: white;
 	width: 630px;
 	height: 670px;
@@ -469,21 +469,21 @@ footer nav ul {
 	position: relative;
 }
 
-.containerModals .modalAjoutImage .fa-arrow-left {
+.containerModals .containerModalAddWorks .fa-arrow-left {
 	position: absolute;
 	top: 20px;
 	left: 20px;
 	cursor: pointer;
 }
 
-.containerModals .modalAjoutImage .fa-xmark {
+.containerModals .containerModalAddWorks .fa-xmark {
 	position: absolute;
 	top: 20px;
 	right: 20px;
 	cursor: pointer;
 }
 
-.containerModals .modalAjoutImage form {
+.containerModals .containerModalAddWorks form {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -492,7 +492,7 @@ footer nav ul {
 	gap: 25px;
 }
 
-.containerModals .modalAjoutImage form .containerFile {
+.containerModals .containerModalAddWorks form .containerFile {
 	background-color: #E8F1F6;
 	height: 45%;
 	width: 100%;
@@ -503,11 +503,11 @@ footer nav ul {
 	border-radius: 3px;
 }
 
-.containerModals .modalAjoutImage form .containerFile i {
+.containerModals .containerModalAddWorks form .containerFile i {
 	color: #B9C5CC;
 }
 
-.containerModals .modalAjoutImage form .containerFile label {
+.containerModals .containerModalAddWorks form .containerFile label {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	background-color: #B9C5CC;
@@ -517,37 +517,37 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.containerModals .modalAjoutImage form .containerFile input {
+.containerModals .containerModalAddWorks form .containerFile input {
 	display: none;
 	font-family: 'Work Sans';
 	font-size: 14px;
 }
 
-.containerModals .modalAjoutImage form .containerFile img {
+.containerModals .containerModalAddWorks form .containerFile img {
 	display: none;
 	max-width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
 
-.containerModals .modalAjoutImage form .containerFile .fa-image {
+.containerModals .containerModalAddWorks form .containerFile .fa-image {
 	font-size: 3rem;
 }
 
-.containerModals .modalAjoutImage form .containerFile p {
+.containerModals .containerModalAddWorks form .containerFile p {
 	font-weight: 300;
 	font-size: 0.5rem;
 	font-family: 'Work Sans';
 	margin-top: 23px;
 }
 
-.containerModals .modalAjoutImage form label {
+.containerModals .containerModalAddWorks form label {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	margin-bottom: -20px;
 }
 
-.containerModals .modalAjoutImage form select {
+.containerModals .containerModalAddWorks form select {
 	height: 50px;
 	font-size: 1.2em;
 	border: transparent;
@@ -555,7 +555,7 @@ footer nav ul {
 }
 
 
-.containerModals .modalAjoutImage form .button {
+.containerModals .containerModalAddWorks form .button {
 	background-color: #A7A7A7;
 	color: white;
 	width: 237px;
@@ -567,7 +567,7 @@ footer nav ul {
 	align-self: center;
 }
 
-.containerModals .modalAjoutImage form .button:focus {
+.containerModals .containerModalAddWorks form .button:focus {
 	background-color: black;
 	color: white;
 }
