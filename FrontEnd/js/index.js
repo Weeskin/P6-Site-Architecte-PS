@@ -27,6 +27,7 @@ async function chargementPage() {
 affichageGalleryProjets();
 displayCategorysButtons();
 filterCategory();
+getStoredWorks();
 }
 
 chargementPage();
@@ -76,7 +77,7 @@ async function displayCategorysButtons() {
 
 // Fonction pour que le bouton fonctionne
 async function filterCategory() {
-    const allStoredWorks = getStoredWorks();
+    const allStoredWorks = await getStoredWorks();
     const allButtons = document.querySelectorAll(".filters button");
 
         allButtons.forEach((button) => {
@@ -183,3 +184,15 @@ const createIconElement = (className) => {
     iconElement.className = className;
     return iconElement;
 };
+
+//Fonction pour mettre à jour le localStorage avec la liste des works
+async function updateStoredWorks(works) {
+    localStorage.setItem('works', JSON.stringify(works));
+}
+
+// Fonction pour récupérer la liste des works depuis le localStorage
+async function getStoredWorks() {
+    const storedWorks = localStorage.getItem('works');
+    return storedWorks ? JSON.parse(storedWorks) : [];
+    //console.log(storedWorks)
+}

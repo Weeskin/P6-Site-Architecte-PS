@@ -104,6 +104,9 @@ async function deleteImage(id){
     try {
         const response = await deleteFetch(deleteUrl);
         if (response.ok) {
+                const currentWorks = getStoredWorks();
+                const updatedWorks = currentWorks.filter(work => work.id !== id);
+                updateStoredWorks(updatedWorks);
                 CreationGalerieModale()
         } else {
             console.log("Le delete n'a pas marché !");

@@ -51,14 +51,4 @@ function ajoutImage() {
 }
 ajoutImage()
 
-//Fonction pour mettre à jour le localStorage avec la liste des works
-function updateStoredWorks(works) {
-    localStorage.setItem('works', JSON.stringify(works));
-}
 
-// Fonction pour récupérer la liste des works depuis le localStorage
-async function getStoredWorks() {
-    const storedWorks = localStorage.getItem('works');
-    return storedWorks ? JSON.parse(storedWorks) : [];
-    //console.log(storedWorks)
-}
