@@ -30,7 +30,6 @@ function ajoutImage() {
                 currentWorks.push(data); // Ajouter le nouveau work
                 updateStoredWorks(currentWorks);
 
-
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }

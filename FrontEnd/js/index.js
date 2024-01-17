@@ -108,8 +108,6 @@ async function filterCategory() {
     });
 }
 
-
-
 //Smooth scrool
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
