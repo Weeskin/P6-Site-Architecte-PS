@@ -23,12 +23,13 @@ function addWorks() {
 
                 // Actualiser la galerie et les works
                 displayModalGalleryModalFromApi();
-                displayGalleryProjets()
+                displayGalleryProjets();
 
                  // Mise à jour du localStorage
                 const currentWorks = await getStoredWorks();
                 currentWorks.push(data); // Ajouter le nouveau work
                 updateStoredWorks(currentWorks);
+                filterCategorys();
 
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
@@ -60,7 +61,9 @@ async function deleteWorks(id){
                 const currentWorks = getStoredWorks();
                 const updatedWorks = currentWorks.filter(work => work.id !== id);
                 updateStoredWorks(updatedWorks);
-                displayModalGalleryModalFromApi()
+                displayModalGalleryModalFromApi();
+                displayGalleryProjets();
+                filterCategorys();
         } else {
             console.log("Le delete n'a pas marché !");
             throw new Error("Le delete n'a pas marché !");

@@ -79,6 +79,7 @@ async function filterCategorys() {
     const allApiWorks = await getWorks(); // Récupérer les travaux via l'API
     const allStoredWorks = await getStoredWorks(); // Récupérer les travaux depuis le localStorage
     const allButtons = document.querySelectorAll(".filters button");
+    const categorySelect = document.getElementById("categorySelect");
 
     allButtons.forEach((button) => {
         button.addEventListener("click", (e) => {
@@ -104,6 +105,28 @@ async function filterCategorys() {
                     // console.log(work);
                 }
             });
+        });
+    });
+
+    // Ajouter un écouteur d'événement sur le sélecteur de catégorie
+    categorySelect.addEventListener("change", (e) => {
+        const categoryId = e.target.value;
+        gallery.innerHTML = "";
+
+        // Afficher les travaux de l'API
+        allApiWorks.forEach((work) => {
+            categoryId == work.categoryId || categoryId == "0"
+                ? creationProjet(work)
+                : null;
+            // console.log(work);
+        });
+
+        // Afficher les travaux depuis le localStorage
+        allStoredWorks.forEach((work) => {
+            categoryId == work.categoryId || categoryId == "0"
+                ? creationProjet(work)
+                : null;
+            // console.log(work);
         });
     });
 }
