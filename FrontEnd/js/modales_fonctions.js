@@ -24,13 +24,12 @@ function addWorks() {
                 // Actualiser la galerie et les works
                 displayModalGalleryModalFromApi();
                 displayGalleryProjets();
+                filterCategorys();
 
                  // Mise à jour du localStorage
                 const currentWorks = await getStoredWorks();
                 currentWorks.push(data); // Ajouter le nouveau work
                 updateStoredWorks(currentWorks);
-                filterCategorys();
-
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }

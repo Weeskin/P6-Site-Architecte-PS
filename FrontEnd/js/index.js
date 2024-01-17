@@ -26,7 +26,6 @@ async function getCategorys() {
 async function loadingPage() {
 displayGalleryProjets();
 displayCategorysButtons();
-filterCategorys();
 }
 
 loadingPage();
@@ -61,7 +60,7 @@ function createWorkElement(work) {
             gallery.appendChild(figure);
 }
 
-// Fonction pour afficher les boutons
+// Fonction pour afficher les boutons dynamiquement
 async function displayCategorysButtons() {
     const categorys = await getCategorys();
     if (categorys) {
@@ -79,7 +78,6 @@ async function filterCategorys() {
     const allApiWorks = await getWorks(); // Récupérer les travaux via l'API
     const allStoredWorks = await getStoredWorks(); // Récupérer les travaux depuis le localStorage
     const allButtons = document.querySelectorAll(".filters button");
-    const categorySelect = document.getElementById("categorySelect");
 
     allButtons.forEach((button) => {
         button.addEventListener("click", (e) => {
@@ -108,7 +106,8 @@ async function filterCategorys() {
         });
     });
 
-    // Ajouter un écouteur d'événement sur le sélecteur de catégorie
+    // Ajout d' un écouteur d'événement sur le sélecteur de catégorie
+    const categorySelect = document.getElementById("categorySelect");  
     categorySelect.addEventListener("change", (e) => {
         const categoryId = e.target.value;
         gallery.innerHTML = "";
