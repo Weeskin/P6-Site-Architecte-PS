@@ -96,8 +96,19 @@ async function CreationGalerieModale() {
         console.error('Erreur lors de la récupération des œuvres pour la galerie modale :', error);
     }
 }
-// Fonction de suppression de l'image en utilisant l'ID
 
+// Récupérer les works du localStorage
+function getStoredWorks() {
+    const storedWorks = localStorage.getItem('works');
+    return storedWorks ? JSON.parse(storedWorks) : [];
+}
+
+// Mettre à jour les works dans le localStorage
+function updateStoredWorks(works) {
+    localStorage.setItem('works', JSON.stringify(works));
+}
+
+// Fonction de suppression de l'image en utilisant l'ID
 async function deleteImage(id){
     const deleteUrl = `http://localhost:5678/api/works/${id}`;
     

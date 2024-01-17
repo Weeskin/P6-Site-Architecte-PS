@@ -27,7 +27,6 @@ async function chargementPage() {
 affichageGalleryProjets();
 displayCategorysButtons();
 filterCategory();
-getStoredWorks();
 }
 
 chargementPage();
@@ -77,31 +76,39 @@ async function displayCategorysButtons() {
 
 // Fonction pour que le bouton fonctionne
 async function filterCategory() {
-    const allStoredWorks = await getStoredWorks();
+    const allApiWorks = await getWorks(); // Récupérer les travaux via l'API
+    const allStoredWorks = await getStoredWorks(); // Récupérer les travaux depuis le localStorage
     const allButtons = document.querySelectorAll(".filters button");
 
-        allButtons.forEach((button) => {
-            button.addEventListener("click", (e) => {
-                allButtons.forEach((btn) => {
+    allButtons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            allButtons.forEach((btn) => {
                 btn.classList.remove("active");
-                });
-                button.classList.add("active");
-                const btnId = e.target.id;
-                gallery.innerHTML = "";
+            });
+            button.classList.add("active");
+            const btnId = e.target.id;
+            gallery.innerHTML = "";
 
-                allStoredWorks.forEach((work) => {
-                    if (btnId == work.categoryId) {
+            // Afficher les travaux de l'API
+            allApiWorks.forEach((work) => {
+                if (btnId == work.categoryId || btnId == "0") {
                     creationProjet(work);
                     // console.log(work);
-                    }
-                    if (btnId == "0") {
-                        creationProjet(work);
-                        // console.log(work);
-                    }
+                }
+            });
+
+            // Afficher les travaux depuis le localStorage
+            allStoredWorks.forEach((work) => {
+                if (btnId == work.categoryId || btnId == "0") {
+                    creationProjet(work);
+                    // console.log(work);
+                }
             });
         });
     });
 }
+
+
 
 //Smooth scrool
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
