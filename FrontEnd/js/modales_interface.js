@@ -98,7 +98,7 @@ async function CreationGalerieModale() {
 }
 // Fonction de suppression de l'image en utilisant l'ID
 
-const deleteImage = async (id) => {
+async function deleteImage(id){
     const deleteUrl = `http://localhost:5678/api/works/${id}`;
     
     try {
@@ -117,7 +117,7 @@ const deleteImage = async (id) => {
 CreationGalerieModale();
 
 // -------------  Affichage de la modale "Ajout d'Image"------------- //
-const displayAjoutImage = () => {
+function displayAjoutImage(){
     btnAddPhoto.addEventListener("click", () => {
         const arrowleft = document.querySelector(".modalAjoutImage .fa-arrow-left");
         const crossendAjoutImage = document.querySelector(".modalAjoutImage .fa-xmark");

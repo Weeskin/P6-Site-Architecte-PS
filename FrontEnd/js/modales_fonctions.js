@@ -24,6 +24,13 @@ function ajoutImage() {
                 // Actualiser la galerie et les works
                 CreationGalerieModale();
                 affichageGalleryProjets()
+
+                 // Mise à jour du localStorage
+                const currentWorks = await getStoredWorks();
+                currentWorks.push(data); // Ajouter le nouveau work
+                updateStoredWorks(currentWorks);
+
+
             } else {
                 throw new Error("Erreur lors de l'envoi du fichier");
             }
@@ -43,3 +50,15 @@ function ajoutImage() {
     });
 }
 ajoutImage()
+
+//Fonction pour mettre à jour le localStorage avec la liste des works
+function updateStoredWorks(works) {
+    localStorage.setItem('works', JSON.stringify(works));
+}
+
+// Fonction pour récupérer la liste des works depuis le localStorage
+async function getStoredWorks() {
+    const storedWorks = localStorage.getItem('works');
+    return storedWorks ? JSON.parse(storedWorks) : [];
+    //console.log(storedWorks)
+}

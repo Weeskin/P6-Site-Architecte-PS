@@ -76,7 +76,7 @@ async function displayCategorysButtons() {
 
 // Fonction pour que le bouton fonctionne
 async function filterCategory() {
-    const allWorks = await getWorks();
+    const allStoredWorks = getStoredWorks();
     const allButtons = document.querySelectorAll(".filters button");
 
         allButtons.forEach((button) => {
@@ -88,7 +88,7 @@ async function filterCategory() {
                 const btnId = e.target.id;
                 gallery.innerHTML = "";
 
-                allWorks.forEach((work) => {
+                allStoredWorks.forEach((work) => {
                     if (btnId == work.categoryId) {
                     creationProjet(work);
                     // console.log(work);
