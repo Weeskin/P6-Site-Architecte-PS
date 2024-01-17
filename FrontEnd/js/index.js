@@ -23,16 +23,16 @@ async function getCategorys() {
 }
 
 // Fonction pour charger la page au chargement initial
-async function chargementPage() {
-affichageGalleryProjets();
+async function loadingPage() {
+displayGalleryProjets();
 displayCategorysButtons();
-filterCategory();
+filterCategorys();
 }
 
-chargementPage();
+loadingPage();
 
 // Fonction pour afficher les travaux dans le DOM
-async function affichageGalleryProjets() {
+async function displayGalleryProjets() {
     try {
         // Nettoyage de la galerie avant ajout de nouveaux éléments
         gallery.innerHTML = '';
@@ -42,14 +42,14 @@ async function affichageGalleryProjets() {
 
         // Créer les éléments de la galerie
         works.forEach(work => {
-            creationProjet(work);
+            createWorkElement(work);
         });
     } catch (error) {
         console.error('Erreur lors de l\'affichage de la galerie :', error);
     }
 }
 
-function creationProjet (work) {
+function createWorkElement(work) {
     const figure = document.createElement("figure");
             const img = document.createElement("img");
             const figcaption = document.createElement("figcaption");
@@ -75,7 +75,7 @@ async function displayCategorysButtons() {
 }
 
 // Fonction pour que le bouton fonctionne
-async function filterCategory() {
+async function filterCategorys() {
     const allApiWorks = await getWorks(); // Récupérer les travaux via l'API
     const allStoredWorks = await getStoredWorks(); // Récupérer les travaux depuis le localStorage
     const allButtons = document.querySelectorAll(".filters button");
@@ -92,7 +92,7 @@ async function filterCategory() {
             // Afficher les travaux de l'API
             allApiWorks.forEach((work) => {
                 if (btnId == work.categoryId || btnId == "0") {
-                    creationProjet(work);
+                    createWorkElement(work);
                     // console.log(work);
                 }
             });
@@ -100,7 +100,7 @@ async function filterCategory() {
             // Afficher les travaux depuis le localStorage
             allStoredWorks.forEach((work) => {
                 if (btnId == work.categoryId || btnId == "0") {
-                    creationProjet(work);
+                    createWorkElement(work);
                     // console.log(work);
                 }
             });
@@ -121,14 +121,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 //Si utilisateur connecté : 
-// Affichage et déconnexion via Logout
-async function affichageAdmin() {
+//Affichage et déconnexion via Logout
+async function displayAdminInterface() {
     document.addEventListener("DOMContentLoaded", function () {
         const logged = window.sessionStorage.getItem("logged");
 
         if (logged === "true") {
-            modEditionBar();
-            creationTitreMesProjets();
+            displayAdminTopBar();
+            updateTitleWithEditButton();
             header.style.margin = "100px 0px 50px 0px";
 
             loginLink.textContent = "Logout";
@@ -142,8 +142,8 @@ async function affichageAdmin() {
     });
 }
 
-// Fonction pour afficher la barre du haut 
-function modEditionBar() {
+// Fonction pour afficher la barre du haut du mode administrateur
+function displayAdminTopBar() {
     const newDiv = document.createElement("div");
     const iconElement = document.createElement("i");
     const titleEditionMod = document.createElement("p");
@@ -160,7 +160,7 @@ function modEditionBar() {
 };
 
 // Fonction pour changer mon titre Mes projets et ajouter le "Modifier"
-function creationTitreMesProjets () {
+function updateTitleWithEditButton () {
     const selectTitlePortfolio = document.querySelector("#portfolio h2");
     const newDiv = document.createElement("div");
     newDiv.className = "editionModPortfolio";
@@ -181,7 +181,7 @@ function creationTitreMesProjets () {
     });
 };
 
-affichageAdmin();
+displayAdminInterface();
 
 // Fonction pour créer un élément i avec une classe donnée
 const createIconElement = (className) => {

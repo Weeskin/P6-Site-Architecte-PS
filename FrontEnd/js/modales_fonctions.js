@@ -1,6 +1,6 @@
 // Fonction pour ajouter une nouvelle image dans la modale "Ajout d'Image", pour ajouter dans la BDD
-function ajoutImage() {
-    formAjoutImage.addEventListener("submit", async (e) => {
+function addWorks() {
+    formAddWorks.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         // Récupération des valeurs du formulaire
@@ -22,8 +22,8 @@ function ajoutImage() {
                 console.log("Fichier envoyé avec succès :", data);
 
                 // Actualiser la galerie et les works
-                CreationGalerieModale();
-                affichageGalleryProjets()
+                displayModalGalleryModalFromApi();
+                displayGalleryProjets()
 
                  // Mise à jour du localStorage
                 const currentWorks = await getStoredWorks();
@@ -42,12 +42,31 @@ function ajoutImage() {
             labelFile.style.display = "flex";
             iconFile.style.display = "flex";
             pFile.style.display = "flex";
-            formAjoutImage.reset();
-            modalGaleriePhoto.style.display = "flex";
-            modalAjoutImage.style.display = "none";
+            formAddWorks.reset();
+            containerModalGallery.style.display = "flex";
+            containerModalAddWorks.style.display = "none";
         }
     });
 }
-ajoutImage()
+addWorks()
 
+// Fonction de suppression de l'image en utilisant l'ID
+async function deleteWorks(id){
+    const deleteUrl = `http://localhost:5678/api/works/${id}`;
+    
+    try {
+        const response = await deleteFetch(deleteUrl);
+        if (response.ok) {
+                const currentWorks = getStoredWorks();
+                const updatedWorks = currentWorks.filter(work => work.id !== id);
+                updateStoredWorks(updatedWorks);
+                displayModalGalleryModalFromApi()
+        } else {
+            console.log("Le delete n'a pas marché !");
+            throw new Error("Le delete n'a pas marché !");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la suppression de l'image :", error.message);
+    }
+};
 
