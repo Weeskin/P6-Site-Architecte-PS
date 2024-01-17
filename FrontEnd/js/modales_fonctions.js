@@ -69,4 +69,3 @@ async function deleteWorks(id){
         console.error("Erreur lors de la suppression de l'image :", error.message);
     }
 };
-

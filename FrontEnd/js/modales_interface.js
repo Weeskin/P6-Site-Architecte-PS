@@ -87,7 +87,7 @@ async function displayModalGallery (works) {
     }
 }
 
-// Appel de displayModalGallery  avec les données récupérées depuis l'API
+// Appel de displayModalGallery avec les données récupérées depuis l'API
 async function displayModalGalleryModalFromApi() {
     try {
         const worksForModal = await getWorks();
@@ -172,20 +172,20 @@ async function displayCategoryModal() {
 displayCategoryModal();
 
 // Ajout des écouteurs d'événements pour vérifier un à un chaque champ
-const champsAValider = [
+const checkFormFields = [
     document.getElementById('file'),
     document.getElementById('title'),
     document.getElementById('categoryInput')
 ];
 
-champsAValider.forEach(champ => {
-    champ.addEventListener('input', verifierChamps);
+checkFormFields .forEach(champ => {
+    champ.addEventListener('input', validateFormInputs);
 });
 
 // Fonction pour vérifier si tous les champs sont remplis et changer la couleur du bouton
-function verifierChamps() {
+function validateFormInputs() {
     // Vérification si tous les champs sont remplis
-    const tousRemplis = champsAValider.every(champ => champ.value.trim() !== '');
+    const tousRemplis = checkFormFields.every(champ => champ.value.trim() !== '');
 
     // Changement de la couleur de fond du bouton en fonction de la vérification
     if (tousRemplis) {
@@ -194,4 +194,4 @@ function verifierChamps() {
         btnAdd.style.backgroundColor = "#ccc";
     }
 };
-verifierChamps();
+validateFormInputs();
