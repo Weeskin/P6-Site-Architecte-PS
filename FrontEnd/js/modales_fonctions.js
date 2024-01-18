@@ -24,7 +24,7 @@ function addWorks() {
                 // Actualiser la galerie et les works
                 displayModalGalleryModalFromApi();
                 displayGalleryProjets();
-                filterCategorys();
+                filterCategorys()
 
                  // Mise à jour du localStorage
                 const currentWorks = await getStoredWorks();
