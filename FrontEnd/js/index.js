@@ -28,25 +28,33 @@ async function getCategorys() {
   }
 }
 
-//Stockage de getWorks dans le local Storage
-function updateStoredWorks(works) {
-  localStorage.setItem("works", JSON.stringify(works));
+// Fonction pour charger la page au chargement initial
+function loadingPage() {
+  displayGalleryProjets();
+  displayCategorysButtons().then(() => {
+    filterCategorys();
+  });
 }
 
+loadingPage();
+
 // Fonction pour afficher les travaux dans le DOM
-function displayGalleryProjets() {
-  console.log("displayGalleryProjets executed");
+async function displayGalleryProjets() {
   try {
     // Nettoyage de la galerie avant ajout de nouveaux éléments
     gallery.innerHTML = "";
-    displayCategorysButtons().then(() => {
-      filterCategorys();
+
+    // Récupérer les travaux depuis l'API
+    const works = await getWorks();
+
+    // Créer les éléments de la galerie
+    works.forEach((work) => {
+      createWorkElement(work);
     });
   } catch (error) {
     console.error("Erreur lors de l'affichage de la galerie :", error);
   }
 }
-displayGalleryProjets();
 
 function createWorkElement(work) {
   const figure = document.createElement("figure");
@@ -62,7 +70,7 @@ function createWorkElement(work) {
 
 // Fonction pour afficher les boutons dynamiquement
 async function displayCategorysButtons() {
-  console.log("displayCategorysButtons executed");
+  console.log("loadingPage executed");
   const categorys = await getCategorys();
   if (categorys) {
     categorys.forEach((category) => {
@@ -74,51 +82,40 @@ async function displayCategorysButtons() {
   }
 }
 
-// Fonction pour récupérer la liste des works depuis le localStorage
-function getStoredWorks() {
-  const storedWorks = localStorage.getItem("works");
-  return storedWorks ? JSON.parse(storedWorks) : [];
-}
-
 // Fonction pour que le bouton fonctionne
 function filterCategorys() {
-  console.log("filterCategorys executed");
   const allButtons = document.querySelectorAll(".filters button");
-  const allStoredWorks = getStoredWorks(); // Récupérer les travaux depuis le localStorage
-  console.log(allStoredWorks);
-  try {
-    allButtons.forEach((button) => {
-      // Afficher les travaux récupérés
-      allStoredWorks.forEach((work) => {
-        createWorkElement(work);
+
+  allButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log("click sur filtre");
+      const allStoredWorks = getStoredWorks(); // Récupérer les travaux depuis le localStorage
+
+      allButtons.forEach((btn) => {
+        btn.classList.remove("active");
       });
-      //Créer les boutons active et non active
-      button.addEventListener("click", (e) => {
-        allButtons.forEach((btn) => {
-          btn.classList.remove("active");
-        });
-        button.classList.add("active");
-        const btnId = e.target.id;
+      button.classList.add("active");
+      const btnId = e.target.id;
+      gallery.innerHTML = "";
 
-        // Filtrer les travaux en fonction de category.id
-        const filteredWorks = allStoredWorks.filter(
-          (work) => work.category.id === btnId || btnId == "0"
-        );
-
-        // Afficher les travaux filtrés
-        filteredWorks.forEach((work) => {
+      // Afficher les travaux de l'API
+      allStoredWorks.forEach((work) => {
+        if (btnId == work.categoryId || btnId == "0") {
           createWorkElement(work);
-        });
+          // console.log(work);
+        }
+      });
+
+      // Afficher les travaux depuis le localStorage
+      allStoredWorks.forEach((work) => {
+        if (btnId == work.categoryId || btnId == "0") {
+          createWorkElement(work);
+          // console.log(work);
+        }
       });
     });
-  } catch (error) {
-    console.error("Erreur lors de l'affichage de la galerie :", error);
-  }
+  });
 }
-
-// allButtons.forEach((button) => {
-//   button.addEventListener("change", (e) => {});
-// })
 
 //Smooth scrool
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -148,7 +145,6 @@ async function displayAdminInterface() {
       loginLink.addEventListener("click", () => {
         window.sessionStorage.setItem("logged", "false");
       });
-      console.log("L'utilisateur est bien connecté");
     } else {
       console.log("L'utilisateur n'est pas connecté");
     }
@@ -206,4 +202,10 @@ const createIconElement = (className) => {
 //Fonction pour mettre à jour le localStorage avec la liste des works
 function updateStoredWorks(works) {
   localStorage.setItem("works", JSON.stringify(works));
+}
+
+// Fonction pour récupérer la liste des works depuis le localStorage
+function getStoredWorks() {
+  const storedWorks = localStorage.getItem("works");
+  return storedWorks ? JSON.parse(storedWorks) : [];
 }
