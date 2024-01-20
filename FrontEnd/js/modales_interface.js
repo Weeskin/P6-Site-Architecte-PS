@@ -80,8 +80,7 @@ function addDeleteEventListenerModal(id) {
 // Fonction pour afficher la Modal Gallery
 async function displayModalGallery(works) {
   try {
-    galerieModal.innerHTML = "";
-    const worksForModal = await getWorks();
+    const worksForModal = await getStoredWorks();
     worksForModal.forEach((work) => {
       createAndAppendFigureModal(work);
     });
