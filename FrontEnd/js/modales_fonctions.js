@@ -51,7 +51,6 @@ async function deleteWorks(id) {
   try {
     const response = await deleteFetch(deleteUrl);
     if (response.ok) {
-      const updatedWorks = currentWorks.filter((work) => work.id !== id);
       displayModalGallery();
       displayGalleryProjets();
     } else {

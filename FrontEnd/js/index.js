@@ -8,7 +8,6 @@ async function getWorks() {
     const response = await fetch("http://localhost:5678/api/works");
     const works = await response.json();
     updateStoredWorks(works);
-
     return works;
   } catch (error) {
     console.error("Erreur lors de la requête :", error);
@@ -88,17 +87,14 @@ function filterCategorys() {
 
   allButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      console.log("click sur filtre");
       const allStoredWorks = getStoredWorks(); // Récupérer les travaux depuis le localStorage
-
       allButtons.forEach((btn) => {
         btn.classList.remove("active");
       });
       button.classList.add("active");
       const btnId = e.target.id;
-      gallery.innerHTML = "";
-
       // Afficher les travaux depuis le localStorage
+      gallery.innerHTML = "";
       allStoredWorks.forEach((work) => {
         if (btnId == work.categoryId || btnId == "0") {
           createWorkElement(work);

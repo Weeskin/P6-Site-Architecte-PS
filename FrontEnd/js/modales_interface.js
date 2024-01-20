@@ -80,6 +80,7 @@ function addDeleteEventListenerModal(id) {
 // Fonction pour afficher la Modal Gallery
 async function displayModalGallery(works) {
   try {
+    galerieModal.innerHTML = "";
     const worksForModal = await getStoredWorks();
     worksForModal.forEach((work) => {
       createAndAppendFigureModal(work);
@@ -88,6 +89,7 @@ async function displayModalGallery(works) {
     console.error("Erreur lors de l'affichage de la modale galerie :", error);
   }
 }
+displayModalGallery();
 
 // -------------  Affichage de la modale "Add Works"------------- //
 function displayAddWorks() {
