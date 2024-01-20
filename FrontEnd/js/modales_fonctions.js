@@ -54,7 +54,6 @@ async function deleteWorks(id) {
       displayModalGallery();
       displayGalleryProjets();
     } else {
-      console.log("Le delete n'a pas marché !");
       throw new Error("Le delete n'a pas marché !");
     }
   } catch (error) {
