@@ -98,14 +98,6 @@ function filterCategorys() {
       const btnId = e.target.id;
       gallery.innerHTML = "";
 
-      // Afficher les travaux de l'API
-      allStoredWorks.forEach((work) => {
-        if (btnId == work.categoryId || btnId == "0") {
-          createWorkElement(work);
-          // console.log(work);
-        }
-      });
-
       // Afficher les travaux depuis le localStorage
       allStoredWorks.forEach((work) => {
         if (btnId == work.categoryId || btnId == "0") {
