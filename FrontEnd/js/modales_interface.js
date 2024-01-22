@@ -70,7 +70,8 @@ function createFigureElementModal(work) {
 // Fonction pour ajouter un gestionnaire d'événements de suppression dans la Modal Gallery
 function addDeleteEventListenerModal(id) {
   const iconElementBin = document.getElementById(id);
-  iconElementBin.addEventListener("click", () => {
+  iconElementBin.addEventListener("click", (event) => {
+    event.preventDefault();
     console.log("Bouton Corbeille cliqué");
     // Appel de la fonction pour supprimer l'image avec l'ID associé à l'image
     deleteWorks(id);
