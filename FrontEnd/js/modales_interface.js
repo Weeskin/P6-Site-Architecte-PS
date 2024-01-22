@@ -44,6 +44,8 @@ function displayContainerModals() {
 // Fonction pour gérer la fermeture des modales
 function closeModals() {
   containerModals.style.display = "none";
+  inputFile.value = "";
+  resetPreviewImg();
 }
 
 // Fonction pour créer et ajouter un élément figure à la Modal Gallery
@@ -104,6 +106,8 @@ function displayAddWorks() {
     arrowleft.addEventListener("click", () => {
       containerModalAddWorks.style.display = "none";
       containerModalGallery.style.display = "flex";
+      inputFile.value = "";
+      resetPreviewImg();
     });
 
     // Gérer la fermeture de la modale via la croix
@@ -138,6 +142,18 @@ function prevImg() {
   });
 }
 prevImg();
+
+// Fonction pour réinitialiser l'aperrçu de l'image
+function resetPreviewImg() {
+  // Réinitialisez l'aperçu de l'image
+  previewImg.src = "#";
+  previewImg.style.display = "none";
+
+  // Réinitialisez les autres éléments à leur état initial
+  labelFile.style.display = "block";
+  iconFile.style.display = "block";
+  pFile.style.display = "block";
+}
 
 //Fonction qui génère les catégories dynamiquement pour le select (visuel)
 async function displayCategoryModal() {
