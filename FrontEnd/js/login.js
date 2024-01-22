@@ -44,8 +44,6 @@ function redirectToIndex() {
 
 // Fonction de gestion de la connexion
 async function submitLogin(e) {
-  e.preventDefault();
-
   // Récupération des valeurs des champs email et password
   const userEmail = emailInput.value;
   const userPassword = passwordInput.value;

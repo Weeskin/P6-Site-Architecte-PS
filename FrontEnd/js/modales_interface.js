@@ -29,7 +29,7 @@ function displayContainerModals() {
   containerModals.style.display = "flex";
   containerModalGallery.style.display = "flex";
   containerModalAddWorks.style.display = "none";
-
+  displayModalGallery();
   // Gérer la fermeture de la modale via la croix
   crossend.addEventListener("click", closeModals);
 
@@ -50,7 +50,6 @@ function closeModals() {
 function createAndAppendFigureModal(work) {
   const figure = createFigureElementModal(work);
   galerieModal.appendChild(figure);
-  addDeleteEventListenerModal(work.id);
 }
 
 // Fonction pour créer un élément figure dans la Modal Gallery
@@ -62,27 +61,24 @@ function createFigureElementModal(work) {
   img.alt = work.title;
   iconElementBin.id = work.id;
   iconElementBin.className = "fa fa-trash";
+  iconElementBin.addEventListener("click", (e) => {
+    if (e.target.className === "fa fa-trash") {
+      e.preventDefault();
+      console.log("Bouton Corbeille cliqué");
+      // Appel de la fonction pour supprimer l'image avec l'ID associé à l'image
+      deleteWorks(work.id);
+    }
+  });
   figure.appendChild(iconElementBin);
   figure.appendChild(img);
   return figure;
-}
-
-// Fonction pour ajouter un gestionnaire d'événements de suppression dans la Modal Gallery
-function addDeleteEventListenerModal(id) {
-  const iconElementBin = document.getElementById(id);
-  iconElementBin.addEventListener("click", (event) => {
-    event.preventDefault();
-    console.log("Bouton Corbeille cliqué");
-    // Appel de la fonction pour supprimer l'image avec l'ID associé à l'image
-    deleteWorks(id);
-  });
 }
 
 // Fonction pour afficher la Modal Gallery
 async function displayModalGallery(works) {
   try {
     galerieModal.innerHTML = "";
-    const worksForModal = await getStoredWorks();
+    const worksForModal = await getWorks();
     worksForModal.forEach((work) => {
       createAndAppendFigureModal(work);
     });
@@ -90,7 +86,6 @@ async function displayModalGallery(works) {
     console.error("Erreur lors de l'affichage de la modale galerie :", error);
   }
 }
-displayModalGallery();
 
 // -------------  Affichage de la modale "Add Works"------------- //
 function displayAddWorks() {

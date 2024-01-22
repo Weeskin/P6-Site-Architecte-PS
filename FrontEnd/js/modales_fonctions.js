@@ -51,10 +51,8 @@ async function deleteWorks(id) {
   try {
     const response = await deleteFetch(deleteUrl);
     if (response.ok) {
-      displayModalGallery();
-      displayGalleryProjets();
-    } else {
-      throw new Error("Le delete n'a pas marché !");
+      await displayModalGallery();
+      await displayGalleryProjets();
     }
   } catch (error) {
     console.error("Erreur lors de la suppression de l'image :", error.message);

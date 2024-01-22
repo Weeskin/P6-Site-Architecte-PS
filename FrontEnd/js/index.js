@@ -7,7 +7,6 @@ async function getWorks() {
   try {
     const response = await fetch("http://localhost:5678/api/works");
     const works = await response.json();
-    updateStoredWorks(works);
     return works;
   } catch (error) {
     console.error("Erreur lors de la requête :", error);
@@ -25,17 +24,6 @@ async function getCategorys() {
       error.message
     );
   }
-}
-
-//Fonction pour mettre à jour le localStorage avec la liste des works
-function updateStoredWorks(works) {
-  localStorage.setItem("works", JSON.stringify(works));
-}
-
-// Fonction pour récupérer la liste des works depuis le localStorage
-function getStoredWorks() {
-  const storedWorks = localStorage.getItem("works");
-  return storedWorks ? JSON.parse(storedWorks) : [];
 }
 
 // Fonction pour charger la page au chargement initial
@@ -97,8 +85,8 @@ function filterCategorys() {
   const allButtons = document.querySelectorAll(".filters button");
 
   allButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const allStoredWorks = getStoredWorks(); // Récupérer les travaux depuis le localStorage
+    button.addEventListener("click", async (e) => {
+      const allStoredWorks = await getWorks(); // Récupérer les travaux depuis le localStorage
       allButtons.forEach((btn) => {
         btn.classList.remove("active");
       });
