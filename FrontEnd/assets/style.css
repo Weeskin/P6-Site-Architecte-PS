@@ -385,7 +385,8 @@ footer nav ul {
 	width: auto;
 	justify-content: center;
 	align-items: center;
-	gap: 10px
+	gap: 10px;
+	margin-bottom: 70px;
 }
 
 .editionModPortfolio i {

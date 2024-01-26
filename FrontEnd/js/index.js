@@ -87,10 +87,6 @@ function filterCategorys() {
   allButtons.forEach((button) => {
     button.addEventListener("click", async (e) => {
       const allStoredWorks = await getWorks(); // Récupérer les travaux depuis le localStorage
-      allButtons.forEach((btn) => {
-        btn.classList.remove("active");
-      });
-      button.classList.add("active");
       const btnId = e.target.id;
       // Afficher les travaux depuis le localStorage
       gallery.innerHTML = "";
@@ -125,6 +121,7 @@ async function displayAdminInterface() {
     if (logged === "true") {
       displayAdminTopBar();
       updateTitleWithEditButton();
+      filters.style.display = "none";
       header.style.margin = "100px 0px 50px 0px";
 
       loginLink.textContent = "Logout";
