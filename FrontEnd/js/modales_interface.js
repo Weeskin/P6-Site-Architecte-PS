@@ -24,12 +24,144 @@ const btnAdd = document.querySelector(
   ".containerModals .containerModalAddWorks form .button"
 );
 
-// -------------  Affichage de la modale générale------------- //
+//Création de la modale en Javascript
+function createModal() {
+  // Vérifie si la modale existe déjà
+  if (document.getElementById("modale")) {
+    return document.getElementById("modale");
+  }
+  // Création de l'élément modal
+  let modal = document.createElement("div");
+  modal.className = "containerModals";
+  modal.id = "modale";
+
+  // Création de la galerie
+  let gallery = document.createElement("div");
+  gallery.className = "containerModalGallery";
+  modal.appendChild(gallery);
+
+  // Ajout des éléments à la galerie
+  let span1 = document.createElement("span");
+  span1.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  gallery.appendChild(span1);
+
+  let h3_1 = document.createElement("h3");
+  h3_1.textContent = "Galerie Photo";
+  gallery.appendChild(h3_1);
+
+  let div1 = document.createElement("div");
+  div1.className = "galerieModal";
+  gallery.appendChild(div1);
+
+  let input1 = document.createElement("input");
+  input1.type = "submit";
+  input1.value = "Ajouter une photo";
+  gallery.appendChild(input1);
+
+  // Création du formulaire d'ajout de travaux
+  let form = document.createElement("div");
+  form.className = "containerModalAddWorks";
+  modal.appendChild(form);
+
+  // Ajout des éléments au formulaire
+  let span2 = document.createElement("span");
+  span2.innerHTML = '<i class="fa-solid fa-arrow-left"></i>';
+  form.appendChild(span2);
+
+  let span3 = document.createElement("span");
+  span3.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  form.appendChild(span3);
+
+  let h3_2 = document.createElement("h3");
+  h3_2.textContent = "Ajout Photo";
+  form.appendChild(h3_2);
+
+  // Ajout du reste du formulaire
+  let div2 = document.createElement("div");
+  div2.className = "containerFile";
+  form.appendChild(div2);
+
+  let span4 = document.createElement("span");
+  span4.innerHTML = '<i class="fa-regular fa-image"></i>';
+  div2.appendChild(span4);
+
+  let label1 = document.createElement("label");
+  label1.setAttribute("for", "file");
+  label1.textContent = "+ Ajouter photo";
+  div2.appendChild(label1);
+
+  let input2 = document.createElement("input");
+  input2.type = "file";
+  input2.id = "file";
+  input2.name = "imageUrl";
+  div2.appendChild(input2);
+
+  let img = document.createElement("img");
+  img.id = "previewImage";
+  img.src = "#";
+  img.alt = "Aperçu de l'image";
+  div2.appendChild(img);
+
+  let p = document.createElement("p");
+  p.textContent = "jpg,png: 4mo max";
+  div2.appendChild(p);
+
+  let label2 = document.createElement("label");
+  label2.setAttribute("for", "title");
+  label2.textContent = "Titre";
+  form.appendChild(label2);
+
+  let input3 = document.createElement("input");
+  input3.type = "text";
+  input3.id = "title";
+  input3.name = "title";
+  form.appendChild(input3);
+
+  let label3 = document.createElement("label");
+  label3.setAttribute("for", "categoryInput");
+  label3.textContent = "Catégorie";
+  form.appendChild(label3);
+
+  let select = document.createElement("select");
+  select.id = "categoryInput";
+  select.name = "category";
+  select.required = true;
+  form.appendChild(select);
+
+  let option = document.createElement("option");
+  option.value = "";
+  select.appendChild(option);
+
+  let button = document.createElement("button");
+  button.type = "submit";
+  button.className = "button";
+  button.textContent = "Valider";
+  form.appendChild(button);
+
+  // Ajout de la modale à la page
+  document.body.insertBefore(modal, document.body.firstChild);
+
+  //Appels des fonctions utilisé dans la modale
+  displayAddWorks();
+  displayModalGallery();
+  prevImg();
+  displayCategoryModal();
+  validateFormInputs();
+
+  return modal;
+}
+
+// Affichage de la modale générale
 function displayContainerModals() {
+  let modal = createModal();
+  let containerModals = modal.querySelector(".containerModals");
+  let containerModalGallery = modal.querySelector(".containerModalGallery");
+  let containerModalAddWorks = modal.querySelector(".containerModalAddWorks");
+
   containerModals.style.display = "flex";
   containerModalGallery.style.display = "flex";
   containerModalAddWorks.style.display = "none";
-  displayModalGallery();
+
   // Gérer la fermeture de la modale via la croix
   crossend.addEventListener("click", closeModals);
 
@@ -121,7 +253,6 @@ function displayAddWorks() {
     });
   });
 }
-displayAddWorks();
 
 // Ecouter les changements sur l'input file pour prévisualisation dans la modale "Ajout d'Image"
 function prevImg() {
@@ -141,7 +272,6 @@ function prevImg() {
     }
   });
 }
-prevImg();
 
 // Fonction pour réinitialiser l'aperrçu de l'image
 function resetPreviewImg() {
@@ -166,7 +296,6 @@ async function displayCategoryModal() {
     select.appendChild(option);
   });
 }
-displayCategoryModal();
 
 // Ajout des écouteurs d'événements pour vérifier un à un chaque champ
 const checkFormFields = [
@@ -193,4 +322,3 @@ function validateFormInputs() {
     btnAdd.style.backgroundColor = "#ccc";
   }
 }
-validateFormInputs();

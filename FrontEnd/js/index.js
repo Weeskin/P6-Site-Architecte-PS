@@ -135,11 +135,10 @@ async function displayAdminInterface() {
     if (logged === "true") {
       displayAdminTopBar();
       updateTitleWithEditButton();
+      createModal();
       filters.style.display = "none";
       header.style.margin = "100px 0px 50px 0px";
-
       loginLink.textContent = "Logout";
-
       loginLink.addEventListener("click", () => {
         window.sessionStorage.setItem("logged", "false");
       });
