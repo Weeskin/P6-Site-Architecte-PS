@@ -75,6 +75,7 @@ async function displayCategorysButtons() {
       const btn = document.createElement("button");
       btn.textContent = category.name;
       btn.id = category.id;
+      btn.classList.add("active");
       filters.appendChild(btn);
     });
   }
@@ -96,6 +97,19 @@ function filterCategorys() {
           // console.log(work);
         }
       });
+      // Retirer la classe 'active' de tous les boutons
+      allButtons.forEach((button) => {
+        button.classList.remove("active");
+      });
+      // Si le bouton cliqué est "Tous", ajouter la classe 'active' à tous les boutons
+      if (btnId == "0") {
+        allButtons.forEach((button) => {
+          button.classList.add("active");
+        });
+      } else {
+        // Ajouter la classe 'active' au bouton cliqué
+        e.target.classList.add("active");
+      }
     });
   });
 }
