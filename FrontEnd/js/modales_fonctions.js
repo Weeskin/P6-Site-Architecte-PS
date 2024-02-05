@@ -31,11 +31,7 @@ function addWorks() {
       console.error("Erreur lors de l'ajout de l'image :", error.message);
     } finally {
       //Réinitialiser tout
-      previewImg.src = "#";
-      previewImg.style.display = "none";
-      labelFile.style.display = "flex";
-      iconFile.style.display = "flex";
-      pFile.style.display = "flex";
+      resetPreviewImg();
       formAddWorks.reset();
       containerModalGallery.style.display = "flex";
       containerModalAddWorks.style.display = "none";

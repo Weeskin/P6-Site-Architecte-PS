@@ -46,6 +46,7 @@ function closeModals() {
   containerModals.style.display = "none";
   inputFile.value = "";
   resetPreviewImg();
+  formAddWorks.reset();
 }
 
 // Fonction pour créer et ajouter un élément figure à la Modal Gallery
@@ -108,6 +109,7 @@ function displayAddWorks() {
       containerModalGallery.style.display = "flex";
       inputFile.value = "";
       resetPreviewImg();
+      formAddWorks.reset();
     });
 
     // Gérer la fermeture de la modale via la croix
