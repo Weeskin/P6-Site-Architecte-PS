@@ -7,8 +7,31 @@ function addWorks() {
     const formData = new FormData();
     const projectTitle = title.value;
     const projectImage = inputFile.files[0];
+    const labelFile = document.querySelector(".containerFile label");
     const categoryInput = document.getElementById("categoryInput");
     const categoryValue = categoryInput.value; //Chaque option dans le select doit avoir comme valeur le category ID
+
+    labelFile.style.color = "";
+    title.style.border = "";
+    categoryInput.style.border = "";
+
+    // Vérifiez si les champs du formulaire sont vides
+    if (inputFile.value === "") {
+      // Si aucun fichier n'est sélectionné, changez la bordure en rouge
+      labelFile.style.border = "2px solid red";
+      labelFile.style.color = "red";
+      return; // Arrêtez l'exécution de la fonction ici
+    }
+
+    if (projectTitle === "") {
+      title.style.border = "2px solid red";
+      return;
+    }
+
+    if (categoryValue === "") {
+      categoryInput.style.border = "2px solid red";
+      return;
+    }
 
     formData.append("title", projectTitle);
     formData.append("category", categoryValue);
