@@ -1,3 +1,14 @@
+//Fonction pour l'affichage de l'erreur
+function displayErrorAddWorks(message) {
+  // Créez un élément div pour afficher le message d'erreur
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "error-message";
+  errorDiv.textContent = message;
+
+  // Insérez le message d'erreur avant le bouton de soumission
+  const submitButton = document.querySelector("#formAddWorks .button");
+  formAddWorks.insertBefore(errorDiv, submitButton);
+}
 // Fonction pour ajouter une nouvelle image dans la modale "Ajout d'Image", pour ajouter dans la BDD
 function addWorks() {
   formAddWorks.addEventListener("submit", async (e) => {
@@ -7,29 +18,36 @@ function addWorks() {
     const formData = new FormData();
     const projectTitle = title.value;
     const projectImage = inputFile.files[0];
-    const labelFile = document.querySelector(".containerFile label");
-    const categoryInput = document.getElementById("categoryInput");
     const categoryValue = categoryInput.value; //Chaque option dans le select doit avoir comme valeur le category ID
 
+    labelFile.style.border = "";
     labelFile.style.color = "";
     title.style.border = "";
     categoryInput.style.border = "";
+
+    const oldError = document.querySelector(".error-message");
+    if (oldError) {
+      oldError.remove();
+    }
 
     // Vérifiez si les champs du formulaire sont vides
     if (inputFile.value === "") {
       // Si aucun fichier n'est sélectionné, changez la bordure en rouge
       labelFile.style.border = "2px solid red";
       labelFile.style.color = "red";
+      displayErrorAddWorks("Merci d'intégrer une image");
       return; // Arrêtez l'exécution de la fonction ici
     }
 
     if (projectTitle === "") {
       title.style.border = "2px solid red";
+      displayErrorAddWorks("Merci d'intégrer un Titre");
       return;
     }
 
     if (categoryValue === "") {
       categoryInput.style.border = "2px solid red";
+      displayErrorAddWorks("Merci d'intégrer une Catégorie");
       return;
     }
 

@@ -20,6 +20,7 @@ const labelFile = document.querySelector(".containerFile label");
 const iconFile = document.querySelector(".containerFile .fa-image");
 const pFile = document.querySelector(".containerFile p");
 const title = document.querySelector("#title");
+const categoryInput = document.getElementById("categoryInput");
 const btnAdd = document.querySelector(
   ".containerModals .containerModalAddWorks form .button"
 );
@@ -155,6 +156,15 @@ function resetPreviewImg() {
   labelFile.style.display = "block";
   iconFile.style.display = "block";
   pFile.style.display = "block";
+  labelFile.style.border = "";
+  labelFile.style.color = "";
+  title.style.border = "";
+  categoryInput.style.border = "";
+
+  const oldError = document.querySelector(".error-message");
+  if (oldError) {
+    oldError.remove();
+  }
 }
 
 //Fonction qui génère les catégories dynamiquement pour le select (visuel)
