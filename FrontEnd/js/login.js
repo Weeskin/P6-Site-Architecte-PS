@@ -10,6 +10,7 @@ const errorMessage = document.querySelector(".login p");
 // Fonction pour effectuer une requête d'authentification
 async function loginUser(email, password) {
   try {
+    // Envoie une requête POST à l'URL de l'API avec les informations d'authentification
     const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
@@ -21,9 +22,10 @@ async function loginUser(email, password) {
       })
     });
 
-    // Retourne les données utilisateur ou un objet vide
+    // Retourne les données utilisateur ou un objet vide en cas d'erreur
     return (await response.json()) || {};
   } catch (error) {
+    // Affiche l'erreur dans la console si la requête échoue
     console.error("Erreur lors de la connexion:", error);
     return {};
   }
@@ -54,7 +56,7 @@ async function submitLogin(e) {
 
   // Vérification de l'existence du token dans les données utilisateur
   if (userData.token) {
-    // Stockage du token et redirection vers la page d'accueil
+    // Stockage du token dans sessionStorage et redirection vers la page d'accueil
     window.sessionStorage.setItem("token", userData.token);
     redirectToIndex();
   } else {

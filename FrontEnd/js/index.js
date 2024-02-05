@@ -75,7 +75,6 @@ async function displayCategorysButtons() {
       const btn = document.createElement("button");
       btn.textContent = category.name;
       btn.id = category.id;
-      btn.classList.add("active");
       filters.appendChild(btn);
     });
   }
@@ -87,31 +86,24 @@ function filterCategorys() {
 
   allButtons.forEach((button) => {
     button.addEventListener("click", async (e) => {
-      const allStoredWorks = await getWorks(); // Récupérer les travaux depuis le localStorage
+      const allStoredWorks = await getWorks();
       const btnId = e.target.id;
-      // Afficher les travaux depuis le localStorage
+
       gallery.innerHTML = "";
       allStoredWorks.forEach((work) => {
         if (btnId == work.categoryId || btnId == "0") {
           createWorkElement(work);
-          // console.log(work);
         }
       });
-      // Retirer la classe 'active' de tous les boutons
+
       allButtons.forEach((button) => {
         button.classList.remove("active");
       });
-      // Si le bouton cliqué est "Tous", ajouter la classe 'active' à tous les boutons
-      if (btnId == "0") {
-        allButtons.forEach((button) => {
-          button.classList.add("active");
-        });
-      } else {
-        // Ajouter la classe 'active' au bouton cliqué
-        e.target.classList.add("active");
-      }
+
+      e.target.classList.add("active");
     });
   });
+  document.getElementById("0").classList.add("active");
 }
 
 //Smooth scrool

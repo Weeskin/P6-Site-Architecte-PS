@@ -19,9 +19,7 @@ async function fetchData(url, method, data) {
   const response = await fetch(url, {
     method,
     headers,
-    body: data ? (data instanceof FormData ? data : data) : null,
-    mode: "cors",
-    credentials: "same-origin"
+    body: data ? (data instanceof FormData ? data : data) : null
   });
 
   if (!response.ok) {
